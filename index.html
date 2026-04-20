@@ -145,7 +145,7 @@
     .hero-slide.active { opacity: 1; }
     .hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(10,10,10,.72) 0%, rgba(192,20,60,.22) 100%);
+      background: linear-gradient(135deg, rgba(10,10,10,.45) 0%, rgba(0,0,0,.25) 100%);
     }
     .hero-content {
       position: relative; z-index: 2;
@@ -209,9 +209,11 @@
     }
     .service-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(0,0,0,.14); }
     .service-icon {
-      font-size: 3rem; margin-bottom: 18px;
-      display: block;
+      width: 64px; height: 64px;
+      margin: 0 auto 20px;
+      display: flex; align-items: center; justify-content: center;
     }
+    .service-icon svg { width: 64px; height: 64px; }
     .service-card h3 { font-size: 1.18rem; font-weight: 800; margin-bottom: 10px; }
     .service-card p { color: var(--muted); font-size: .95rem; }
 
@@ -304,7 +306,8 @@
       padding: 4px 32px; transform: rotate(35deg);
       letter-spacing: .5px;
     }
-    .price-icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .price-icon { width: 56px; height: 56px; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center; }
+    .price-icon svg { width: 56px; height: 56px; }
     .price-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; }
     .price-from { font-size: .8rem; color: var(--muted); }
     .price-amount {
@@ -344,9 +347,10 @@
     .review-author { display: flex; align-items: center; gap: 14px; }
     .review-avatar {
       width: 44px; height: 44px; border-radius: 50%;
-      background: var(--blue-lt); display: flex;
-      align-items: center; justify-content: center;
-      font-size: 1.3rem; flex-shrink: 0;
+      background: var(--blue); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 800; flex-shrink: 0;
+      letter-spacing: -.5px;
     }
     .review-name { font-weight: 700; font-size: .95rem; }
     .review-loc  { font-size: .82rem; color: var(--muted); }
@@ -672,9 +676,138 @@
 </head>
 <body>
 
+<!-- SVG sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!-- sofa -->
+  <symbol id="ico-sofa" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="10" y="18" width="44" height="12" rx="3"/>
+    <rect x="10" y="28" width="44" height="14" rx="3"/>
+    <rect x="3"  y="24" width="9"  height="18" rx="3"/>
+    <rect x="52" y="24" width="9"  height="18" rx="3"/>
+    <line x1="14" y1="42" x2="12" y2="52"/>
+    <line x1="50" y1="42" x2="52" y2="52"/>
+  </symbol>
+  <!-- chair -->
+  <symbol id="ico-chair" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="20" y1="10" x2="20" y2="54"/>
+    <line x1="44" y1="10" x2="44" y2="54"/>
+    <rect x="20" y="10" width="24" height="18" rx="2.5"/>
+    <rect x="13" y="30" width="38" height="9"  rx="2.5"/>
+    <line x1="15" y1="39" x2="13" y2="54"/>
+    <line x1="49" y1="39" x2="51" y2="54"/>
+  </symbol>
+  <!-- carpet -->
+  <symbol id="ico-carpet" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="8" y="14" width="48" height="36" rx="4"/>
+    <rect x="17" y="22" width="30" height="20" rx="2"/>
+    <line x1="17" y1="14" x2="17" y2="8"/>
+    <line x1="25" y1="14" x2="25" y2="8"/>
+    <line x1="32" y1="14" x2="32" y2="8"/>
+    <line x1="39" y1="14" x2="39" y2="8"/>
+    <line x1="47" y1="14" x2="47" y2="8"/>
+    <line x1="17" y1="50" x2="17" y2="56"/>
+    <line x1="25" y1="50" x2="25" y2="56"/>
+    <line x1="32" y1="50" x2="32" y2="56"/>
+    <line x1="39" y1="50" x2="39" y2="56"/>
+    <line x1="47" y1="50" x2="47" y2="56"/>
+  </symbol>
+  <!-- mattress -->
+  <symbol id="ico-mattress" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="18" width="54" height="28" rx="5"/>
+    <line x1="5"  y1="29" x2="59" y2="29"/>
+    <line x1="5"  y1="39" x2="59" y2="39"/>
+    <circle cx="19" cy="34" r="2.5" fill="#c0143c" stroke="none"/>
+    <circle cx="32" cy="34" r="2.5" fill="#c0143c" stroke="none"/>
+    <circle cx="45" cy="34" r="2.5" fill="#c0143c" stroke="none"/>
+  </symbol>
+  <!-- car -->
+  <symbol id="ico-car" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 38 L4 44 C4 46 6 47 8 47 L56 47 C58 47 60 46 60 44 L60 38 L52 38 L47 26 C46 23 43 22 40 22 L24 22 C21 22 18 23 17 26 L12 38 Z"/>
+    <path d="M19 28 L21 38 L43 38 L45 28 Z"/>
+    <circle cx="17" cy="47" r="6"/>
+    <circle cx="47" cy="47" r="6"/>
+  </symbol>
+  <!-- phone -->
+  <symbol id="ico-phone" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 10 h10 l4 12 -6 4 c3 6 9 12 16 16 l4-6 12 4 v10 C54 52 10 54 14 10 Z"/>
+  </symbol>
+  <!-- email -->
+  <symbol id="ico-email" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="8" y="16" width="48" height="32" rx="4"/>
+    <polyline points="8,16 32,36 56,16"/>
+  </symbol>
+  <!-- pin -->
+  <symbol id="ico-pin" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 6 C22 6 14 14 14 24 C14 38 32 58 32 58 C32 58 50 38 50 24 C50 14 42 6 32 6 Z"/>
+    <circle cx="32" cy="24" r="7"/>
+  </symbol>
+  <!-- clock -->
+  <symbol id="ico-clock" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="32" cy="32" r="22"/>
+    <line x1="32" y1="18" x2="32" y2="32"/>
+    <line x1="32" y1="32" x2="44" y2="38"/>
+  </symbol>
+  <!-- trophy -->
+  <symbol id="ico-trophy" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 8 h24 v18 a12 12 0 0 1-24 0 Z"/>
+    <path d="M8 10 h12 v10 a6 6 0 0 1-12 0 Z"/>
+    <path d="M44 10 h12 v10 a6 6 0 0 1-12 0 Z"/>
+    <line x1="32" y1="38" x2="32" y2="48"/>
+    <rect x="20" y="48" width="24" height="6" rx="3"/>
+  </symbol>
+  <!-- leaf -->
+  <symbol id="ico-leaf" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 50 C14 50 16 28 32 18 C44 10 56 12 56 12 C56 12 54 24 46 32 C36 42 14 50 14 50 Z"/>
+    <line x1="14" y1="50" x2="36" y2="28"/>
+  </symbol>
+  <!-- van -->
+  <symbol id="ico-van" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="24" width="56" height="24" rx="3"/>
+    <path d="M4 32 L4 24 C4 22 6 20 8 20 L36 20 L48 32"/>
+    <path d="M36 20 L48 20 L60 32"/>
+    <circle cx="16" cy="48" r="6"/>
+    <circle cx="48" cy="48" r="6"/>
+    <line x1="22" y1="48" x2="42" y2="48"/>
+  </symbol>
+  <!-- stopwatch -->
+  <symbol id="ico-timer" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="32" cy="36" r="20"/>
+    <line x1="32" y1="36" x2="32" y2="24"/>
+    <line x1="32" y1="36" x2="42" y2="36"/>
+    <line x1="26" y1="8" x2="38" y2="8"/>
+    <line x1="32" y1="8" x2="32" y2="16"/>
+    <line x1="50" y1="18" x2="54" y2="14"/>
+  </symbol>
+  <!-- shield check -->
+  <symbol id="ico-shield" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 6 L54 14 V32 C54 44 44 54 32 58 C20 54 10 44 10 32 V14 Z"/>
+    <polyline points="22,32 29,40 42,26"/>
+  </symbol>
+  <!-- calendar -->
+  <symbol id="ico-calendar" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="8" y="14" width="48" height="42" rx="4"/>
+    <line x1="8"  y1="26" x2="56" y2="26"/>
+    <line x1="22" y1="8"  x2="22" y2="20"/>
+    <line x1="42" y1="8"  x2="42" y2="20"/>
+    <circle cx="22" cy="36" r="2" fill="#c0143c" stroke="none"/>
+    <circle cx="32" cy="36" r="2" fill="#c0143c" stroke="none"/>
+    <circle cx="42" cy="36" r="2" fill="#c0143c" stroke="none"/>
+    <circle cx="22" cy="46" r="2" fill="#c0143c" stroke="none"/>
+    <circle cx="32" cy="46" r="2" fill="#c0143c" stroke="none"/>
+  </symbol>
+  <!-- house -->
+  <symbol id="ico-house" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 30 L32 8 L58 30"/>
+    <path d="M12 26 L12 56 L52 56 L52 26"/>
+    <rect x="24" y="40" width="16" height="16" rx="2"/>
+    <rect x="14" y="30" width="11" height="10" rx="1.5"/>
+    <rect x="39" y="30" width="11" height="10" rx="1.5"/>
+  </symbol>
+</svg>
+
 <!-- ===== FLOATING CALL BUTTON ===== -->
 <a class="float-call" href="tel:+36301234567">
-  📞 Hívjon most!
+  <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><path d="M14 10h10l4 12-6 4c3 6 9 12 16 16l4-6 12 4v10C54 52 10 54 14 10Z"/></svg> Hívjon most!
 </a>
 
 <!-- ===== HEADER ===== -->
@@ -747,32 +880,32 @@
     <p class="section-sub">Mindent egy kézből – nálad helyszínen vagy nálunk, rugalmas időpontban.</p>
     <div class="services-grid">
       <div class="service-card">
-        <span class="service-icon">🛋️</span>
+        <div class="service-icon"><svg><use href="#ico-sofa"/></svg></div>
         <h3>Ülőgarnitúra tisztítás</h3>
         <p>Kanapé, fotel, szék – mélytisztítás injektoros mosó géppel, gyors száradással.</p>
       </div>
       <div class="service-card">
-        <span class="service-icon">🪑</span>
+        <div class="service-icon"><svg><use href="#ico-chair"/></svg></div>
         <h3>Szék- és textilbútor</h3>
         <p>Étkezői székek, irodai székek és bárszékek professzionális tisztítása.</p>
       </div>
       <div class="service-card">
-        <span class="service-icon">🟫</span>
+        <div class="service-icon"><svg><use href="#ico-carpet"/></svg></div>
         <h3>Szőnyegtisztítás</h3>
         <p>Gépi szőnyegtisztítás a legmakacsabb foltokra is, kíméletesen a szálakhoz.</p>
       </div>
       <div class="service-card">
-        <span class="service-icon">🛏️</span>
+        <div class="service-icon"><svg><use href="#ico-mattress"/></svg></div>
         <h3>Matractisztítás</h3>
         <p>Poratkák, foltok, szagok eltávolítása. Allergiásoknak különösen ajánlott!</p>
       </div>
       <div class="service-card">
-        <span class="service-icon">🚗</span>
+        <div class="service-icon"><svg><use href="#ico-car"/></svg></div>
         <h3>Autóbelső tisztítás</h3>
         <p>Ülések, mennyezet, szőnyegek – autód belseje újszerű lesz.</p>
       </div>
       <div class="service-card">
-        <span class="service-icon">🏠</span>
+        <div class="service-icon"><svg><use href="#ico-house"/></svg></div>
         <h3>Helyszíni szolgáltatás</h3>
         <p>Kimegyünk hozzád! Nincs szükség cipőre – a munkát nálad végezzük el.</p>
       </div>
@@ -826,7 +959,7 @@
     <div class="price-cards">
 
       <div class="price-card">
-        <div class="price-icon">🪑</div>
+        <div class="price-icon"><svg><use href="#ico-chair"/></svg></div>
         <h3>Szék / Fotel</h3>
         <div class="price-from">ártól</div>
         <div class="price-amount">2 990 Ft</div>
@@ -840,7 +973,7 @@
       </div>
 
       <div class="price-card featured">
-        <div class="price-icon">🛋️</div>
+        <div class="price-icon"><svg><use href="#ico-sofa"/></svg></div>
         <h3>Ülőgarnitúra</h3>
         <div class="price-from">ártól</div>
         <div class="price-amount">14 990 Ft</div>
@@ -855,7 +988,7 @@
       </div>
 
       <div class="price-card">
-        <div class="price-icon">🟫</div>
+        <div class="price-icon"><svg><use href="#ico-carpet"/></svg></div>
         <h3>Szőnyeg</h3>
         <div class="price-from">ártól</div>
         <div class="price-amount">990 Ft</div>
@@ -869,7 +1002,7 @@
       </div>
 
       <div class="price-card">
-        <div class="price-icon">🛏️</div>
+        <div class="price-icon"><svg><use href="#ico-mattress"/></svg></div>
         <h3>Matrac</h3>
         <div class="price-from">ártól</div>
         <div class="price-amount">7 990 Ft</div>
@@ -1104,7 +1237,7 @@
         <div class="stars">★★★★★</div>
         <p class="review-text">"Hihetetlen az eredmény! Az ülőgarnitúránk teljesen újnak néz ki. Gyorsak, precízek és kedvesek voltak. Legközelebb is csak hozzájuk fordulok!"</p>
         <div class="review-author">
-          <div class="review-avatar">👩</div>
+          <div class="review-avatar">KM</div>
           <div>
             <div class="review-name">Kovács Mária</div>
             <div class="review-loc">Budapest, XIII. kerület</div>
@@ -1116,7 +1249,7 @@
         <div class="stars">★★★★★</div>
         <p class="review-text">"A szőnyegünkön 5 éves foltos volt, amit más nem tudott eltávolítani. KG Kárpit egy kezeléssel megoldotta. Áron felüli minőség!"</p>
         <div class="review-author">
-          <div class="review-avatar">👨</div>
+          <div class="review-avatar">NP</div>
           <div>
             <div class="review-name">Nagy Péter</div>
             <div class="review-loc">Pest megye</div>
@@ -1128,7 +1261,7 @@
         <div class="stars">★★★★★</div>
         <p class="review-text">"A matractisztítás után az allergás tüneteim jelentősen csökkentek. Profik, megbízhatók, időpontra pontosan érkeztek. Csak ajánlani tudom!"</p>
         <div class="review-author">
-          <div class="review-avatar">👩</div>
+          <div class="review-avatar">SÉ</div>
           <div>
             <div class="review-name">Szabó Éva</div>
             <div class="review-loc">Budaörs</div>
@@ -1140,7 +1273,7 @@
         <div class="stars">★★★★★</div>
         <p class="review-text">"Az autóm üléseit tisztíttatták meg náluk. Döbbenetes különbség! Ráadásul az ár is nagyon korrekt volt. Barátknak is ajánlottam."</p>
         <div class="review-author">
-          <div class="review-avatar">👨</div>
+          <div class="review-avatar">HG</div>
           <div>
             <div class="review-name">Horváth Gábor</div>
             <div class="review-loc">Budapest, XI. kerület</div>
@@ -1152,7 +1285,7 @@
         <div class="stars">★★★★★</div>
         <p class="review-text">"Irodai székjeinket tisztíttatták – 20 darabot egy nap alatt megcsinálták. Rugalmasak, precízek. Irodai partnerünk lett belőlük."</p>
         <div class="review-author">
-          <div class="review-avatar">👩</div>
+          <div class="review-avatar">KA</div>
           <div>
             <div class="review-name">Kiss Andrea</div>
             <div class="review-loc">Budapest, V. kerület</div>
@@ -1164,7 +1297,7 @@
         <div class="stars">★★★★★</div>
         <p class="review-text">"Gyerekektől teljesen összekoszolt sarokkanapéjuk volt. Tökéletesen letisztítva adták vissza. Gyors száradás, kellemes illat. 10/10!"</p>
         <div class="review-author">
-          <div class="review-avatar">👩</div>
+          <div class="review-avatar">TR</div>
           <div>
             <div class="review-name">Takács Réka</div>
             <div class="review-loc">Győr</div>
@@ -1188,12 +1321,12 @@
         <p>A KG Kárpit & Szőnyegtisztítás csapata több mint <strong>8 éve</strong> dolgozik azon, hogy ügyfeleink otthona és irodája tiszta, egészséges és szép legyen.</p>
         <p>Modern, ipari minőségű gépekkel, környezetbarát és allergiásoknak biztonságos tisztítószerekkel dolgozunk. Fő célunk az elégedett ügyfél – ezért munkánkra <strong>garanciát vállalunk.</strong></p>
         <ul class="team-features">
-          <li><span class="icon">🏆</span> 8+ év szakmai tapasztalat</li>
-          <li><span class="icon">🌿</span> Környezetbarát, biztonságos szerek</li>
-          <li><span class="icon">🚐</span> Helyszíni kiszállás egész Magyarországon</li>
-          <li><span class="icon">⏱️</span> Gyors száradás (2–4 óra)</li>
-          <li><span class="icon">✅</span> Elégedettségi garancia</li>
-          <li><span class="icon">📅</span> Rugalmas időpontok, hétvégén is</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-trophy"/></svg></span> 8+ év szakmai tapasztalat</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-leaf"/></svg></span> Környezetbarát, biztonságos szerek</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-van"/></svg></span> Helyszíni kiszállás egész Magyarországon</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-timer"/></svg></span> Gyors száradás (2–4 óra)</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-shield"/></svg></span> Elégedettségi garancia</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-calendar"/></svg></span> Rugalmas időpontok, hétvégén is</li>
         </ul>
       </div>
     </div>
@@ -1211,28 +1344,28 @@
         <p>Kérdése van? Ajánlatot szeretne kérni? Keressen minket bátran – személyesen, telefonon vagy e-mailen segítünk.</p>
         <div class="contact-items">
           <div class="contact-item">
-            <div class="ci-icon">📞</div>
+            <div class="ci-icon"><svg width="22" height="22"><use href="#ico-phone"/></svg></div>
             <div class="ci-text">
               <strong>Telefonszám</strong>
               <a href="tel:+36301234567">+36 30 123 4567</a>
             </div>
           </div>
           <div class="contact-item">
-            <div class="ci-icon">📧</div>
+            <div class="ci-icon"><svg width="22" height="22"><use href="#ico-email"/></svg></div>
             <div class="ci-text">
               <strong>E-mail cím</strong>
               <a href="mailto:info@kgkarpit.hu">info@kgkarpit.hu</a>
             </div>
           </div>
           <div class="contact-item">
-            <div class="ci-icon">📍</div>
+            <div class="ci-icon"><svg width="22" height="22"><use href="#ico-pin"/></svg></div>
             <div class="ci-text">
               <strong>Munkaterület</strong>
               <span>Budapest és környéke, egész Magyarország</span>
             </div>
           </div>
           <div class="contact-item">
-            <div class="ci-icon">🕐</div>
+            <div class="ci-icon"><svg width="22" height="22"><use href="#ico-clock"/></svg></div>
             <div class="ci-text">
               <strong>Nyitvatartás</strong>
               <span>H–P: 8:00–18:00 | Szo: 9:00–14:00</span>
@@ -1309,10 +1442,10 @@
     <div class="footer-col">
       <h4>Elérhetőség</h4>
       <ul>
-        <li><a href="tel:+36301234567">📞 +36 30 123 4567</a></li>
-        <li><a href="mailto:info@kgkarpit.hu">📧 info@kgkarpit.hu</a></li>
-        <li><a href="#contact">📍 Budapest & Magyarország</a></li>
-        <li><a href="#contact">🕐 H–P: 8:00–18:00</a></li>
+        <li><a href="tel:+36301234567" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><path d="M14 10h10l4 12-6 4c3 6 9 12 16 16l4-6 12 4v10C54 52 10 54 14 10Z"/></svg>+36 30 123 4567</a></li>
+        <li><a href="mailto:info@kgkarpit.hu" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><rect x="8" y="16" width="48" height="32" rx="4"/><polyline points="8,16 32,36 56,16"/></svg>info@kgkarpit.hu</a></li>
+        <li><a href="#contact" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><path d="M32 6C22 6 14 14 14 24c0 14 18 34 18 34s18-20 18-34C50 14 42 6 32 6Z"/><circle cx="32" cy="24" r="7"/></svg>Budapest & Magyarország</a></li>
+        <li><a href="#contact" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"/><line x1="32" y1="18" x2="32" y2="32"/><line x1="32" y1="32" x2="44" y2="38"/></svg>H–P: 8:00–18:00</a></li>
       </ul>
     </div>
   </div>
@@ -1323,6 +1456,7 @@
 
 <!-- ===== JAVASCRIPT ===== -->
 <script>
+
   /* --- Slideshow --- */
   const slides = document.querySelectorAll('.hero-slide');
   const dots   = document.querySelectorAll('.dot');
