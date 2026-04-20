@@ -21,9 +21,9 @@
 
     /* ===== CSS VARIABLES ===== */
     :root {
-      --blue:    #c0143c;
-      --blue-dk: #96102e;
-      --blue-lt: #fce8ed;
+      --blue:    #d4143e;
+      --blue-dk: #a80f30;
+      --blue-lt: #fde8ed;
       --gold:    #f5f5f5;
       --text:    #1a1a1a;
       --muted:   #5a5a6a;
@@ -77,9 +77,21 @@
       padding: 14px 20px; max-width: 1140px; margin: 0 auto;
     }
     .logo { display: flex; align-items: center; gap: 12px; }
-    .logo img { width: 52px; height: 52px; object-fit: contain; border-radius: 8px; }
-    .logo-text { font-size: 1.25rem; font-weight: 800; color: var(--blue); line-height: 1.2; }
-    .logo-text span { display: block; font-size: .75rem; font-weight: 500; color: var(--muted); }
+    .logo-img-full {
+      height: 54px; width: auto;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .logo-divider {
+      width: 2px; height: 36px;
+      background: #d0d0d0;
+      flex-shrink: 0;
+    }
+    .logo-label {
+      font-size: .78rem; font-weight: 700;
+      color: var(--text); line-height: 1.4;
+      text-transform: uppercase; letter-spacing: .3px;
+    }
     .nav-links {
       display: flex; gap: 28px; list-style: none; align-items: center;
     }
@@ -192,6 +204,7 @@
       width: 10px; height: 10px; border-radius: 50%;
       background: rgba(255,255,255,.45); border: none; cursor: pointer;
       transition: background .3s, transform .3s;
+      padding: 8px; box-sizing: content-box;
     }
     .dot.active { background: #fff; transform: scale(1.3); }
 
@@ -224,10 +237,12 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 32px;
     }
+    /* BA Slider */
+    .ba-slider { position: relative; max-width: 860px; margin: 0 auto 40px; }
+    .ba-track { overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow); }
+    .ba-slides { display: flex; transition: transform .4s ease; }
     .ba-card {
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
+      min-width: 100%;
       background: #fff;
     }
     .ba-images {
@@ -235,7 +250,7 @@
       position: relative;
     }
     .ba-images img {
-      width: 100%; height: 220px; object-fit: cover;
+      width: 100%; height: 340px; object-fit: cover;
     }
     .ba-label {
       position: absolute; bottom: 10px;
@@ -250,25 +265,74 @@
       width: 3px; background: #fff; z-index: 2;
     }
     .ba-card p {
-      padding: 16px 20px; font-weight: 600;
-      color: var(--muted); font-size: .92rem;
+      padding: 14px 20px; font-weight: 600;
+      color: var(--muted); font-size: .92rem; text-align: center;
+    }
+    .ba-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,.45); color: #fff; border: none;
+      width: 42px; height: 42px; border-radius: 50%; font-size: 1.2rem;
+      cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .ba-arrow:hover { background: var(--blue); }
+    .ba-arrow.prev { left: -20px; }
+    .ba-arrow.next { right: -20px; }
+    .ba-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+    .ba-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #ccc; border: none; cursor: pointer; padding: 8px;
+      box-sizing: content-box; transition: background .2s;
+    }
+    .ba-dot.active { background: var(--blue); }
+    @media(max-width:640px){
+      .ba-images img { height: 180px; }
+      .ba-arrow.prev { left: 4px; }
+      .ba-arrow.next { right: 4px; }
     }
 
     /* Gallery */
+    /* Gallery filter */
+    .gallery-filter {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; margin-bottom: 28px;
+    }
+    .gf-btn {
+      padding: 9px 22px; border-radius: 50px;
+      border: 2px solid #ddd; background: #fff;
+      font-family: inherit; font-size: .9rem; font-weight: 700;
+      color: var(--muted); cursor: pointer;
+      transition: all .2s;
+    }
+    .gf-btn:hover  { border-color: var(--blue); color: var(--blue); }
+    .gf-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+    /* Gallery grid */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 16px;
-      margin-top: 12px;
     }
-    .gallery-grid img {
-      width: 100%; height: 200px; object-fit: cover;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      transition: transform .22s;
+    .g-item {
+      position: relative; border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow);
       cursor: pointer;
+      transition: transform .22s, opacity .3s;
     }
-    .gallery-grid img:hover { transform: scale(1.03); }
+    .g-item.hidden { display: none; }
+    .g-item:hover  { transform: scale(1.02); }
+    .g-item img {
+      width: 100%; height: 220px; object-fit: cover; display: block;
+    }
+    .g-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,.65));
+      color: #fff; font-size: .82rem; font-weight: 700;
+      padding: 28px 14px 10px;
+      transform: translateY(100%);
+      transition: transform .22s;
+    }
+    .g-item:hover .g-caption { transform: translateY(0); }
 
     /* Lightbox */
     .lightbox {
@@ -461,6 +525,19 @@
       font-size: .9rem; transition: color .2s;
     }
     .footer-col ul li a:hover { color: #fff; }
+    .social-links {
+      display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;
+    }
+    .social-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 18px; border-radius: 50px;
+      background: rgba(255,255,255,.1); color: rgba(255,255,255,.85);
+      font-size: .88rem; font-weight: 700;
+      border: 1px solid rgba(255,255,255,.15);
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .social-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
     .footer-bottom {
       border-top: 1px solid rgba(255,255,255,.1);
       text-align: center; padding: 18px 20px;
@@ -473,15 +550,15 @@
       display: flex; align-items: center; gap: 10px;
       background: var(--blue); color: #fff;
       padding: 14px 22px; border-radius: 50px;
-      box-shadow: 0 6px 24px rgba(192,20,60,.5);
+      box-shadow: 0 6px 24px rgba(212,20,62,.5);
       font-weight: 700; font-size: .95rem;
       animation: pulse 2.5s infinite;
       transition: transform .2s;
     }
     .float-call:hover { transform: scale(1.05); }
     @keyframes pulse {
-      0%, 100% { box-shadow: 0 6px 24px rgba(192,20,60,.5); }
-      50%       { box-shadow: 0 6px 32px rgba(192,20,60,.85); }
+      0%, 100% { box-shadow: 0 6px 24px rgba(212,20,62,.5); }
+      50%       { box-shadow: 0 6px 32px rgba(212,20,62,.85); }
     }
 
     /* ===== CALCULATOR ===== */
@@ -622,7 +699,7 @@
       background: var(--blue); color: #fff;
       font-size: 1.3rem; font-weight: 900;
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; box-shadow: 0 4px 16px rgba(192,20,60,.3);
+      flex-shrink: 0; box-shadow: 0 4px 16px rgba(212,20,62,.3);
       position: relative; z-index: 1;
     }
     .step-line {
@@ -680,9 +757,9 @@
       .nav-links  { display: none; }
       .hamburger  { display: flex; }
       nav         { padding: 10px 14px; }
-      .logo img   { width: 40px; height: 40px; }
-      .logo-text  { font-size: .95rem; }
-      .logo-text span { font-size: .7rem; }
+      nav .logo-img-full  { height: 42px; }
+      nav .logo-divider   { display: none; }
+      nav .logo-label     { display: none; }
 
       /* Sections */
       .section       { padding: 44px 0; }
@@ -725,7 +802,10 @@
 
       /* Gallery */
       .gallery-grid   { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .gallery-grid img { height: 130px; border-radius: 8px; }
+      .g-item img     { height: 140px; }
+      .g-caption      { font-size: .85rem; }
+      .gallery-filter { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+      .gf-btn         { font-size: .85rem; padding: 11px 16px; flex-shrink: 0; min-height: 44px; }
 
       /* Prices */
       .price-cards    { grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -733,7 +813,8 @@
       .price-icon     { width: 44px; height: 44px; margin-bottom: 10px; }
       .price-card h3  { font-size: .95rem; }
       .price-amount   { font-size: 1.6rem; }
-      .price-list li  { font-size: .82rem; }
+      .price-list li  { font-size: .88rem; }
+      .price-from, .price-unit { font-size: .85rem; }
 
       /* Calculator */
       .calc-items     { font-size: .9rem; }
@@ -748,7 +829,8 @@
       /* Reviews */
       .reviews-grid   { grid-template-columns: 1fr; }
       .review-card    { padding: 20px 16px; }
-      .review-text    { font-size: .9rem; }
+      .review-text    { font-size: .92rem; }
+      .review-loc     { font-size: .86rem; }
 
       /* Team */
       .team-img img   { height: 200px; }
@@ -770,6 +852,9 @@
       .footer-grid    { grid-template-columns: 1fr; gap: 24px; padding: 0 14px 28px; }
       footer          { padding: 36px 0 0; }
       .footer-bottom  { font-size: .78rem; padding: 14px; }
+      .footer-brand .logo-img-full { height: 40px; }
+      .footer-brand .logo-label   { display: block; font-size: .72rem; }
+      .footer-brand .logo-divider { display: block; }
 
       /* Floating button */
       .float-call     { bottom: 14px; right: 14px; padding: 11px 16px; font-size: .84rem; gap: 7px; }
@@ -786,6 +871,15 @@
       .price-cards    { grid-template-columns: 1fr; }
       .gallery-grid   { grid-template-columns: 1fr 1fr; }
       .tab-btn span   { display: none; }
+      .ba-images img  { height: 130px; }
+      .ba-arrow       { width: 40px; height: 40px; font-size: 1.1rem; }
+      .ba-arrow.prev  { left: 2px; }
+      .ba-arrow.next  { right: 2px; }
+      .contact-items  { gap: 14px; }
+      .ci-icon        { width: 40px; height: 40px; }
+      .section-sub    { font-size: .92rem; }
+      .contact-item .ci-text a,
+      .contact-item .ci-text span { font-size: .95rem; }
     }
   </style>
 </head>
@@ -794,7 +888,7 @@
 <!-- SVG sprite -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
   <!-- sofa -->
-  <symbol id="ico-sofa" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-sofa" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="10" y="18" width="44" height="12" rx="3"/>
     <rect x="10" y="28" width="44" height="14" rx="3"/>
     <rect x="3"  y="24" width="9"  height="18" rx="3"/>
@@ -803,7 +897,7 @@
     <line x1="50" y1="42" x2="52" y2="52"/>
   </symbol>
   <!-- chair -->
-  <symbol id="ico-chair" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-chair" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <line x1="20" y1="10" x2="20" y2="54"/>
     <line x1="44" y1="10" x2="44" y2="54"/>
     <rect x="20" y="10" width="24" height="18" rx="2.5"/>
@@ -812,7 +906,7 @@
     <line x1="49" y1="39" x2="51" y2="54"/>
   </symbol>
   <!-- carpet -->
-  <symbol id="ico-carpet" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-carpet" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="8" y="14" width="48" height="36" rx="4"/>
     <rect x="17" y="22" width="30" height="20" rx="2"/>
     <line x1="17" y1="14" x2="17" y2="8"/>
@@ -827,16 +921,16 @@
     <line x1="47" y1="50" x2="47" y2="56"/>
   </symbol>
   <!-- mattress -->
-  <symbol id="ico-mattress" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-mattress" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="5" y="18" width="54" height="28" rx="5"/>
     <line x1="5"  y1="29" x2="59" y2="29"/>
     <line x1="5"  y1="39" x2="59" y2="39"/>
-    <circle cx="19" cy="34" r="2.5" fill="#c0143c" stroke="none"/>
-    <circle cx="32" cy="34" r="2.5" fill="#c0143c" stroke="none"/>
-    <circle cx="45" cy="34" r="2.5" fill="#c0143c" stroke="none"/>
+    <circle cx="19" cy="34" r="2.5" fill="#d4143e" stroke="none"/>
+    <circle cx="32" cy="34" r="2.5" fill="#d4143e" stroke="none"/>
+    <circle cx="45" cy="34" r="2.5" fill="#d4143e" stroke="none"/>
   </symbol>
   <!-- car -->
-  <symbol id="ico-car" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-car" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 38 L4 44 C4 46 6 47 8 47 L56 47 C58 47 60 46 60 44 L60 38 L52 38 L47 26 C46 23 43 22 40 22 L24 22 C21 22 18 23 17 26 L12 38 Z"/>
     <path d="M19 28 L21 38 L43 38 L45 28 Z"/>
     <circle cx="17" cy="47" r="6"/>
@@ -863,7 +957,7 @@
     <line x1="32" y1="32" x2="44" y2="38"/>
   </symbol>
   <!-- trophy -->
-  <symbol id="ico-trophy" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-trophy" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M20 8 h24 v18 a12 12 0 0 1-24 0 Z"/>
     <path d="M8 10 h12 v10 a6 6 0 0 1-12 0 Z"/>
     <path d="M44 10 h12 v10 a6 6 0 0 1-12 0 Z"/>
@@ -871,12 +965,12 @@
     <rect x="20" y="48" width="24" height="6" rx="3"/>
   </symbol>
   <!-- leaf -->
-  <symbol id="ico-leaf" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-leaf" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M14 50 C14 50 16 28 32 18 C44 10 56 12 56 12 C56 12 54 24 46 32 C36 42 14 50 14 50 Z"/>
     <line x1="14" y1="50" x2="36" y2="28"/>
   </symbol>
   <!-- van -->
-  <symbol id="ico-van" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-van" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="4" y="24" width="56" height="24" rx="3"/>
     <path d="M4 32 L4 24 C4 22 6 20 8 20 L36 20 L48 32"/>
     <path d="M36 20 L48 20 L60 32"/>
@@ -885,7 +979,7 @@
     <line x1="22" y1="48" x2="42" y2="48"/>
   </symbol>
   <!-- stopwatch -->
-  <symbol id="ico-timer" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-timer" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="32" cy="36" r="20"/>
     <line x1="32" y1="36" x2="32" y2="24"/>
     <line x1="32" y1="36" x2="42" y2="36"/>
@@ -894,24 +988,24 @@
     <line x1="50" y1="18" x2="54" y2="14"/>
   </symbol>
   <!-- shield check -->
-  <symbol id="ico-shield" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-shield" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M32 6 L54 14 V32 C54 44 44 54 32 58 C20 54 10 44 10 32 V14 Z"/>
     <polyline points="22,32 29,40 42,26"/>
   </symbol>
   <!-- calendar -->
-  <symbol id="ico-calendar" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-calendar" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="8" y="14" width="48" height="42" rx="4"/>
     <line x1="8"  y1="26" x2="56" y2="26"/>
     <line x1="22" y1="8"  x2="22" y2="20"/>
     <line x1="42" y1="8"  x2="42" y2="20"/>
-    <circle cx="22" cy="36" r="2" fill="#c0143c" stroke="none"/>
-    <circle cx="32" cy="36" r="2" fill="#c0143c" stroke="none"/>
-    <circle cx="42" cy="36" r="2" fill="#c0143c" stroke="none"/>
-    <circle cx="22" cy="46" r="2" fill="#c0143c" stroke="none"/>
-    <circle cx="32" cy="46" r="2" fill="#c0143c" stroke="none"/>
+    <circle cx="22" cy="36" r="2" fill="#d4143e" stroke="none"/>
+    <circle cx="32" cy="36" r="2" fill="#d4143e" stroke="none"/>
+    <circle cx="42" cy="36" r="2" fill="#d4143e" stroke="none"/>
+    <circle cx="22" cy="46" r="2" fill="#d4143e" stroke="none"/>
+    <circle cx="32" cy="46" r="2" fill="#d4143e" stroke="none"/>
   </symbol>
   <!-- house -->
-  <symbol id="ico-house" viewBox="0 0 64 64" fill="none" stroke="#c0143c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ico-house" viewBox="0 0 64 64" fill="none" stroke="#d4143e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M6 30 L32 8 L58 30"/>
     <path d="M12 26 L12 56 L52 56 L52 26"/>
     <rect x="24" y="40" width="16" height="16" rx="2"/>
@@ -921,7 +1015,7 @@
 </svg>
 
 <!-- ===== FLOATING CALL BUTTON ===== -->
-<a class="float-call" href="tel:+36301234567">
+<a class="float-call" href="tel:+36307566261">
   <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><path d="M14 10h10l4 12-6 4c3 6 9 12 16 16l4-6 12 4v10C54 52 10 54 14 10Z"/></svg> Hívjon most!
 </a>
 
@@ -929,14 +1023,14 @@
 <header>
   <nav>
     <div class="logo">
-      <img src="Images/Logó.jpg" alt="KG Kárpit logo" loading="lazy" />
-      <div class="logo-text">KG Kárpit<span>& Szőnyegtisztítás</span></div>
+      <img src="Images/Logó.jpg" alt="KG Kárpit logo" loading="lazy" class="logo-img-full" />
+      <div class="logo-divider"></div>
+      <div class="logo-label">Kárpit- és<br>Szőnyegtisztítás</div>
     </div>
     <ul class="nav-links">
       <li><a href="#services">Szolgáltatások</a></li>
       <li><a href="#references">Referenciák</a></li>
       <li><a href="#prices">Áraink</a></li>
-      <li><a href="#calculator">Kalkulátor</a></li>
       <li><a href="#reviews">Vélemények</a></li>
       <li><a href="#about">Rólunk</a></li>
       <li class="nav-cta"><a href="#contact">Ajánlatkérés</a></li>
@@ -949,7 +1043,6 @@
     <a href="#services"   onclick="closeMobileMenu()">Szolgáltatások</a>
     <a href="#references" onclick="closeMobileMenu()">Referenciák</a>
     <a href="#prices"      onclick="closeMobileMenu()">Áraink</a>
-    <a href="#calculator"  onclick="closeMobileMenu()">Kalkulátor</a>
     <a href="#reviews"    onclick="closeMobileMenu()">Vélemények</a>
     <a href="#about"      onclick="closeMobileMenu()">Rólunk</a>
     <a href="#contact"    onclick="closeMobileMenu()">Ajánlatkérés</a>
@@ -960,6 +1053,7 @@
 <section id="hero">
   <div class="hero-slides">
     <div class="hero-slide active" style="background-image:url('Images/Cover5.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('Images/Cover2.jpg')"></div>
     <div class="hero-slide" style="background-image:url('Images/Cover3.jpg')"></div>
     <div class="hero-slide" style="background-image:url('Images/Cover4.jpg')"></div>
     <div class="hero-overlay"></div>
@@ -968,8 +1062,8 @@
     <span class="hero-badge">Megbízható kárpit- és szőnyegtisztítás</span>
     <h1 class="hero-title">Tiszta bútor,<br>tiszta otthon –<br>garantáltan.</h1>
     <p class="hero-desc">
-      Professzionális kárpit- és szőnyegtisztítás modern géppel, gyors száradással.
-      Ülőgarnitúra, matrac, szőnyeg, autóbelső – elvégezzük nálad helyszínen is!
+      Professzionális kárpit- és szőnyegtisztítás modern géppel, 24 órás száradással.
+      Ülőgarnitúra, matrac, szőnyeg – elvégezzük nálad helyszínen is!
     </p>
     <div class="hero-btns">
       <a href="#contact" class="btn btn-gold">Ingyenes ajánlatkérés</a>
@@ -985,6 +1079,7 @@
     <button class="dot active" onclick="goToSlide(0)"></button>
     <button class="dot" onclick="goToSlide(1)"></button>
     <button class="dot" onclick="goToSlide(2)"></button>
+    <button class="dot" onclick="goToSlide(3)"></button>
   </div>
 </section>
 
@@ -1012,7 +1107,7 @@
         <div class="service-card">
           <div class="service-icon"><svg><use href="#ico-sofa"/></svg></div>
           <h3>Ülőgarnitúra tisztítás</h3>
-          <p>Kanapé, fotel, szék – mélytisztítás injektoros mosó géppel, gyors száradással.</p>
+          <p>Kanapé, fotel, szék – Gépi (permetextrakciós) mélytisztítás, gyors száradással. Kutya- és macskaszőr eltávolítással.</p>
         </div>
         <div class="service-card">
           <div class="service-icon"><svg><use href="#ico-chair"/></svg></div>
@@ -1022,17 +1117,17 @@
         <div class="service-card">
           <div class="service-icon"><svg><use href="#ico-carpet"/></svg></div>
           <h3>Szőnyegtisztítás</h3>
-          <p>Gépi szőnyegtisztítás a legmakacsabb foltokra is, kíméletesen a szálakhoz.</p>
+          <p>Gépi (permetextrakciós) szőnyegtisztítás a legmakacsabb foltokra is, kíméletesen a szálakhoz.</p>
         </div>
         <div class="service-card">
           <div class="service-icon"><svg><use href="#ico-mattress"/></svg></div>
           <h3>Matractisztítás</h3>
-          <p>Poratkák, foltok, szagok eltávolítása. Allergiásoknak különösen ajánlott!</p>
+          <p>Gépi (permetextrakciós) mélytisztítás, poratka-mentesítés. Allergiásoknak különösen ajánlott!</p>
         </div>
         <div class="service-card">
-          <div class="service-icon"><svg><use href="#ico-car"/></svg></div>
-          <h3>Autóbelső tisztítás</h3>
-          <p>Ülések, mennyezet, szőnyegek – autód belseje újszerű lesz.</p>
+          <div class="service-icon"><svg><use href="#ico-trophy"/></svg></div>
+          <h3>Céges megrendelések</h3>
+          <p>Irodák, szállodák, éttermek – nagytételes vállalati megrendelőknek is dolgozunk.</p>
         </div>
         <div class="service-card">
           <div class="service-icon"><svg><use href="#ico-house"/></svg></div>
@@ -1093,10 +1188,10 @@
           <div class="step-num">4</div>
           <div class="step-line last"></div>
           <div class="step-body">
-            <h3>Gyors száradás & elégedettség-ellenőrzés</h3>
-            <p>Modern gépünkkel az átlagos száradási idő mindössze <strong>2–4 óra</strong>. Munka után közösen ellenőrizzük az eredményt. Ha valami nem felel meg az elvárásoknak, azonnal korrigálunk – elégedettségi garanciát vállalunk minden munkánkra.</p>
+            <h3>24 órás száradás & elégedettség-ellenőrzés</h3>
+            <p>Modern gépünkkel az átlagos száradási idő mindössze <strong>24 óra</strong>. Munka után közösen ellenőrizzük az eredményt. Ha valami nem felel meg az elvárásoknak, azonnal korrigálunk – elégedettségi garanciát vállalunk minden munkánkra.</p>
             <ul class="step-list">
-              <li>2–4 órás száradási idő</li>
+              <li>24 órás száradási idő</li>
               <li>Közös átvétel és ellenőrzés</li>
               <li>100% elégedettségi garancia</li>
             </ul>
@@ -1118,28 +1213,187 @@
     <h2 class="section-title">Referenciáink</h2>
     <p class="section-sub">Nézze meg az eredményeinket! Előtte–utána képek és galériánk.</p>
 
-    <div class="ba-grid">
-      <div class="ba-card">
-        <div class="ba-images">
-          <img src="Images/Előtte kép.jpg" alt="Előtte" loading="lazy" />
-          <img src="Images/Utánna kép.jpg" alt="Utánna" loading="lazy" />
-          <div class="ba-divider"></div>
-          <span class="ba-label before">Előtte</span>
-          <span class="ba-label after">Utánna</span>
+    <!-- Előtte / Utána slider -->
+    <div class="ba-slider">
+      <div class="ba-track">
+        <div class="ba-slides" id="baSlides">
+          <div class="ba-card">
+            <div class="ba-images">
+              <img src="Images/Előtte 1.jpg" alt="Előtte" loading="lazy" />
+              <img src="Images/Utánna 1 (szönyeg).jpg" alt="Utána" loading="lazy" />
+              <div class="ba-divider"></div>
+              <span class="ba-label before">Előtte</span>
+              <span class="ba-label after">Utána</span>
+            </div>
+            <p>Szőnyeg – szembetűnő különbség egyetlen kezeléssel.</p>
+          </div>
+          <div class="ba-card">
+            <div class="ba-images">
+              <img src="Images/Előtte 2.jpg" alt="Előtte" loading="lazy" />
+              <img src="Images/Utánna 2 (matrac).jpg" alt="Utána" loading="lazy" />
+              <div class="ba-divider"></div>
+              <span class="ba-label before">Előtte</span>
+              <span class="ba-label after">Utána</span>
+            </div>
+            <p>Matrac – mélytisztítás, poratka-mentesítés.</p>
+          </div>
+          <div class="ba-card">
+            <div class="ba-images">
+              <img src="Images/Előtte 3.jpg" alt="Előtte" loading="lazy" />
+              <img src="Images/Utánna 3 (fotel.jpg" alt="Utána" loading="lazy" />
+              <div class="ba-divider"></div>
+              <span class="ba-label before">Előtte</span>
+              <span class="ba-label after">Utána</span>
+            </div>
+            <p>Fotel – gépi permetextrakciós mélytisztítás.</p>
+          </div>
+          <div class="ba-card">
+            <div class="ba-images">
+              <img src="Images/Előtte 4.jpg" alt="Előtte" loading="lazy" />
+              <img src="Images/Utánna 4 (szönyeg).jpg" alt="Utána" loading="lazy" />
+              <div class="ba-divider"></div>
+              <span class="ba-label before">Előtte</span>
+              <span class="ba-label after">Utána</span>
+            </div>
+            <p>Szőnyeg – visszakapja eredeti színét.</p>
+          </div>
+          <div class="ba-card">
+            <div class="ba-images">
+              <img src="Images/Előtte 5.jpg" alt="Előtte" loading="lazy" />
+              <img src="Images/Utánna 5 szék.jpg" alt="Utána" loading="lazy" />
+              <div class="ba-divider"></div>
+              <span class="ba-label before">Előtte</span>
+              <span class="ba-label after">Utána</span>
+            </div>
+            <p>Makacs foltok, háziállat szőr – mind eltávolítva.</p>
+          </div>
+          <div class="ba-card">
+            <div class="ba-images">
+              <img src="Images/Előtte 6.jpg" alt="Előtte" loading="lazy" />
+              <img src="Images/Utánna 6 (szék).jpg" alt="Utána" loading="lazy" />
+              <div class="ba-divider"></div>
+              <span class="ba-label before">Előtte</span>
+              <span class="ba-label after">Utána</span>
+            </div>
+            <p>Szék – profi tisztítás, mint az új.</p>
+          </div>
+          <div class="ba-card">
+            <div class="ba-images">
+              <img src="Images/Előtte 7.jpg" alt="Előtte" loading="lazy" />
+              <img src="Images/Utánna 7 (szönyeg).jpg" alt="Utána" loading="lazy" />
+              <div class="ba-divider"></div>
+              <span class="ba-label before">Előtte</span>
+              <span class="ba-label after">Utána</span>
+            </div>
+            <p>Szőnyeg – mélytisztítás, az eredmény magáért beszél.</p>
+          </div>
+          <div class="ba-card">
+            <div class="ba-images">
+              <img src="Images/Előtte kép.jpg" alt="Előtte" loading="lazy" />
+              <img src="Images/Utánna kép.jpg" alt="Utána" loading="lazy" />
+              <div class="ba-divider"></div>
+              <span class="ba-label before">Előtte</span>
+              <span class="ba-label after">Utána</span>
+            </div>
+            <p>Kanapé mélytisztítás – szembetűnő különbség egyetlen kezeléssel.</p>
+          </div>
         </div>
-        <p>Kanapé mélytisztítás – szembetűnő különbség egyetlen kezeléssel.</p>
       </div>
+      <button class="ba-arrow prev" onclick="baMove(-1)">&#8249;</button>
+      <button class="ba-arrow next" onclick="baMove(1)">&#8250;</button>
+      <div class="ba-dots" id="baDots"></div>
     </div>
 
-    <h3 style="text-align:center;margin:52px 0 8px;font-size:1.4rem;font-weight:800;">Galéria</h3>
-    <p style="text-align:center;color:var(--muted);margin-bottom:4px;">Kattintson egy képre a nagyításhoz</p>
-    <div class="gallery-grid">
-      <img src="Images/Cover1.jpg" alt="Kárpittisztítás 1" loading="lazy" onclick="openLightbox(this.src)" />
-      <img src="Images/Cover2.jpg" alt="Kárpittisztítás 2" loading="lazy" onclick="openLightbox(this.src)" />
-      <img src="Images/Cover3.jpg" alt="Kárpittisztítás 3" loading="lazy" onclick="openLightbox(this.src)" />
-      <img src="Images/Cover4.jpg" alt="Kárpittisztítás 4" loading="lazy" onclick="openLightbox(this.src)" />
-      <img src="Images/Előtte kép.jpg" alt="Előtte" loading="lazy" onclick="openLightbox(this.src)" />
-      <img src="Images/Utánna kép.jpg" alt="Utánna" loading="lazy" onclick="openLightbox(this.src)" />
+    <!-- Galéria filter -->
+    <div class="gallery-filter">
+      <button class="gf-btn active" onclick="filterGallery('all', this)">Összes</button>
+      <button class="gf-btn" onclick="filterGallery('kanape', this)">Kanapék</button>
+      <button class="gf-btn" onclick="filterGallery('szek', this)">Székek / Fotelek</button>
+      <button class="gf-btn" onclick="filterGallery('szonyeg', this)">Szőnyegek</button>
+      <button class="gf-btn" onclick="filterGallery('matrac', this)">Matracok</button>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- Kanapék -->
+      <div class="g-item" data-cat="kanape">
+        <img src="Images/kanapé.jpg" alt="Kanapé tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Kanapé tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="kanape">
+        <img src="Images/kanapé 2.jpg" alt="Kanapé tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Kanapé tisztítás</div>
+      </div>
+      <!-- Székek / Fotelek -->
+      <div class="g-item" data-cat="szek">
+        <img src="Images/szék.jpg" alt="Szék tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szék tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szek">
+        <img src="Images/szék 2.jpg" alt="Szék tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szék tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szek">
+        <img src="Images/szék 3.jpg" alt="Szék tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szék tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szek">
+        <img src="Images/Utánna 3 (fotel.jpg" alt="Fotel tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Fotel tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szek">
+        <img src="Images/Utánna 6 (szék).jpg" alt="Szék tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szék tisztítás</div>
+      </div>
+      <!-- Szőnyegek -->
+      <div class="g-item" data-cat="szonyeg">
+        <img src="Images/szönyeg.jpg" alt="Szőnyeg tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szőnyeg tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szonyeg">
+        <img src="Images/Utánna 1 (szönyeg).jpg" alt="Szőnyeg tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szőnyeg tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szonyeg">
+        <img src="Images/Utánna 4 (szönyeg).jpg" alt="Szőnyeg tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szőnyeg tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szonyeg">
+        <img src="Images/Utánna 7 (szönyeg).jpg" alt="Szőnyeg tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szőnyeg tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szonyeg">
+        <img src="Images/Cover3.jpg" alt="Szőnyeg tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szőnyeg tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szonyeg">
+        <img src="Images/cover 12 szönyeg.jpg" alt="Szőnyeg tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szőnyeg tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szonyeg">
+        <img src="Images/cover 13 szönyeg.jpg" alt="Szőnyeg tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szőnyeg tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szek">
+        <img src="Images/Cover 14 fotel.jpg" alt="Fotel tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Fotel tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="kanape">
+        <img src="Images/cover 15 kanapé.jpg" alt="Kanapé tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szőnyeg tisztítás</div>
+      </div>
+      <!-- Matracok -->
+      <div class="g-item" data-cat="matrac">
+        <img src="Images/Utánna 2 (matrac).jpg" alt="Matrac tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Matrac tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="szek">
+        <img src="Images/Utánna 5 szék.jpg" alt="Szék tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Szék tisztítás</div>
+      </div>
+      <div class="g-item" data-cat="matrac">
+        <img src="Images/Utánna kép.jpg" alt="Matrac tisztítás" loading="lazy" onclick="openLightbox(this.src)" />
+        <div class="g-caption">Matrac tisztítás</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1161,32 +1415,32 @@
         <div class="price-icon"><svg><use href="#ico-chair"/></svg></div>
         <h3>Szék / Fotel</h3>
         <div class="price-from">ártól</div>
-        <div class="price-amount">1 000 Ft</div>
+        <div class="price-amount">1 500 Ft</div>
         <div class="price-unit">/ db-tól</div>
         <ul class="price-list">
-          <li>Szék: 1 000 Ft / db</li>
-          <li>Párna: 1 500 Ft / db</li>
-          <li>Fotel: 8 000 Ft / db</li>
-          <li>Gyors száradás</li>
-        </ul>
-      </div>
-
-      <div class="price-card featured">
-        <div class="price-icon"><svg><use href="#ico-sofa"/></svg></div>
-        <h3>Ülőgarnitúra</h3>
-        <div class="price-from">ártól</div>
-        <div class="price-amount">15 000 Ft</div>
-        <div class="price-unit">/ db-tól</div>
-        <ul class="price-list">
-          <li>Kis „L" alakú: 15 000 Ft</li>
-          <li>Nagy „L" alakú: 18 000 Ft</li>
-          <li>Sarokkanapé: 20 000 Ft</li>
-          <li>„U" alakú: 22 000 Ft</li>
-          <li>3 részes szett: 30 000 Ft</li>
+          <li>Szék: 1 500 Ft-tól</li>
+          <li>Kis párna: 1 000 Ft-tól</li>
+          <li>Nagy párna: 2 000 Ft-tól</li>
+          <li>Fotel: 10 000 Ft-tól</li>
         </ul>
       </div>
 
       <div class="price-card">
+        <div class="price-icon"><svg><use href="#ico-sofa"/></svg></div>
+        <h3>Ülőgarnitúra</h3>
+        <div class="price-from">ártól</div>
+        <div class="price-amount">18 000 Ft</div>
+        <div class="price-unit">/ db-tól</div>
+        <ul class="price-list">
+          <li>Kis „L" alakú: 18 000 Ft-tól</li>
+          <li>Nagy „L" alakú: 20 000 Ft-tól</li>
+          <li>Sarokkanapé: 25 000 Ft-tól</li>
+          <li>„U" alakú: 30 000 Ft-tól</li>
+          <li>3 részes szett: 40 000 Ft-tól</li>
+        </ul>
+      </div>
+
+      <div class="price-card featured">
         <div class="price-icon"><svg><use href="#ico-carpet"/></svg></div>
         <h3>Szőnyeg</h3>
         <div class="price-from">ártól</div>
@@ -1194,9 +1448,9 @@
         <div class="price-unit">/ m²-től</div>
         <ul class="price-list">
           <li>Gépi mélytisztítás</li>
-          <li>Foltkezelés</li>
-          <li>Szagtalanítás</li>
-          <li>Minden méretben</li>
+          <li>Szőnyeg típustól független</li>
+          <li>Rongy szőnyeg kivételével</li>
+          <li>Foltkezelés, szagtalanítás</li>
         </ul>
       </div>
 
@@ -1204,13 +1458,13 @@
         <div class="price-icon"><svg><use href="#ico-mattress"/></svg></div>
         <h3>Matrac</h3>
         <div class="price-from">ártól</div>
-        <div class="price-amount">12 000 Ft</div>
+        <div class="price-amount">15 000 Ft</div>
         <div class="price-unit">/ db-tól</div>
         <ul class="price-list">
-          <li>Gyerekágy: 12 000 Ft</li>
-          <li>Egyszemélyes: 14 000 Ft</li>
-          <li>Kétszemélyes: 20 000 Ft</li>
+          <li>Egyszemélyes: 15 000 Ft-tól</li>
+          <li>Kétszemélyes: 25 000 Ft-tól</li>
           <li>Poratka-mentesítés</li>
+
         </ul>
       </div>
 
@@ -1222,13 +1476,9 @@
   </div>
 </section>
 
-<!-- ===== CALCULATOR ===== -->
-<section class="section section-alt" id="calculator">
-  <div class="container">
-    <h2 class="section-title">Árajánlat kalkulátor</h2>
-    <p class="section-sub">Válassza ki a kívánt szolgáltatásokat, adja meg a mennyiséget – azonnal látja a becsült összeget!</p>
-
-    <div class="calc-wrap">
+<!-- CALCULATOR REMOVED -->
+<section style="display:none" id="calculator">
+  <div class="calc-wrap">
 
       <!-- Tételek -->
       <div class="calc-items">
@@ -1518,16 +1768,28 @@
       <div class="team-text">
         <h2>Miért válasszon minket?</h2>
         <p>A KG Kárpit & Szőnyegtisztítás csapata több mint <strong>8 éve</strong> dolgozik azon, hogy ügyfeleink otthona és irodája tiszta, egészséges és szép legyen.</p>
-        <p>Modern, ipari minőségű gépekkel, környezetbarát és allergiásoknak biztonságos tisztítószerekkel dolgozunk. Fő célunk az elégedett ügyfél – ezért munkánkra <strong>garanciát vállalunk.</strong></p>
+        <p>Modern, ipari minőségű gépekkel dolgozunk. Fő célunk az elégedett ügyfél – ezért munkánkra <strong>garanciát vállalunk.</strong></p>
         <ul class="team-features">
           <li><span class="icon"><svg width="18" height="18"><use href="#ico-trophy"/></svg></span> 8+ év szakmai tapasztalat</li>
-          <li><span class="icon"><svg width="18" height="18"><use href="#ico-leaf"/></svg></span> Környezetbarát, biztonságos szerek</li>
-          <li><span class="icon"><svg width="18" height="18"><use href="#ico-van"/></svg></span> Helyszíni kiszállás egész Magyarországon</li>
-          <li><span class="icon"><svg width="18" height="18"><use href="#ico-timer"/></svg></span> Gyors száradás (2–4 óra)</li>
-          <li><span class="icon"><svg width="18" height="18"><use href="#ico-shield"/></svg></span> Elégedettségi garancia</li>
-          <li><span class="icon"><svg width="18" height="18"><use href="#ico-calendar"/></svg></span> Rugalmas időpontok, hétvégén is</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-van"/></svg></span> Kiszállás: Cegléd / Nagykőrös / Kecskemét vonzáskörzete</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-timer"/></svg></span> Évszaktól és időjárástól független szolgáltatás</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-shield"/></svg></span> Garanciát vállalunk minden munkánkra</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-calendar"/></svg></span> Előzetes időpontegyeztetés szükséges</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-house"/></svg></span> Parkolási lehetőség biztosított</li>
+          <li><span class="icon"><svg width="18" height="18"><use href="#ico-leaf"/></svg></span> Kutya- és macskaszőr eltávolítás is</li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARTNERS ===== -->
+<section class="section" id="partners" style="padding:40px 0;">
+  <div class="container">
+    <p style="text-align:center;font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:28px;">Néhány ügyfelünk</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;">
+      <img src="Images/MARKA_LOGOK_rgb-01-scaled.png" alt="Márka" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
+      <img src="Images/fornetti_kicsi.png" alt="Fornetti" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
     </div>
   </div>
 </section>
@@ -1546,28 +1808,28 @@
             <div class="ci-icon"><svg width="22" height="22"><use href="#ico-phone"/></svg></div>
             <div class="ci-text">
               <strong>Telefonszám</strong>
-              <a href="tel:+36301234567">+36 30 123 4567</a>
+              <a href="tel:+36307566261">+36 30 756 6261</a>
             </div>
           </div>
           <div class="contact-item">
             <div class="ci-icon"><svg width="22" height="22"><use href="#ico-email"/></svg></div>
             <div class="ci-text">
               <strong>E-mail cím</strong>
-              <a href="mailto:info@kgkarpit.hu">info@kgkarpit.hu</a>
+              <a href="mailto:kgkarpittisztitas@gmail.com">kgkarpittisztitas@gmail.com</a>
             </div>
           </div>
           <div class="contact-item">
             <div class="ci-icon"><svg width="22" height="22"><use href="#ico-pin"/></svg></div>
             <div class="ci-text">
               <strong>Munkaterület</strong>
-              <span>Budapest és környéke, egész Magyarország</span>
+              <span>Cegléd / Nagykőrös / Kecskemét vonzáskörzete, nagyobb munkáknál távolabbra is</span>
             </div>
           </div>
           <div class="contact-item">
             <div class="ci-icon"><svg width="22" height="22"><use href="#ico-clock"/></svg></div>
             <div class="ci-text">
               <strong>Nyitvatartás</strong>
-              <span>H–P: 8:00–18:00 | Szo: 9:00–14:00</span>
+              <span>Előzetes telefonos egyeztetés szükséges</span>
             </div>
           </div>
         </div>
@@ -1598,13 +1860,19 @@
               <option>Szőnyegtisztítás</option>
               <option>Matractisztítás</option>
               <option>Szék / Fotel tisztítás</option>
-              <option>Autóbelső tisztítás</option>
+
               <option>Több szolgáltatás</option>
             </select>
           </div>
           <div class="form-group">
             <label for="message">Rövid leírás (opcionális)</label>
             <textarea id="message" name="message" placeholder="Pl. 3 személyes kanapé, van kutya, sötét szőnyeg 3×4 m..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="photo">Fotó csatolása (opcionális)</label>
+            <input type="file" id="photo" name="photo" accept="image/*" multiple
+              style="padding:8px;cursor:pointer;background:#fafafa;"/>
+            <span style="font-size:.8rem;color:var(--muted);margin-top:4px;display:block;">Képet küldhet a tisztítandó felületről – gyorsítja az árajánlatot.</span>
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%;font-size:1.05rem;">
             Ajánlatot kérek →
@@ -1623,10 +1891,21 @@
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="logo">
-        <img src="Images/Logó.jpg" alt="KG Kárpit logo" loading="lazy" style="width:44px;height:44px;border-radius:6px;" />
-        <div class="logo-text">KG Kárpit<span>& Szőnyegtisztítás</span></div>
+        <img src="Images/Logó.jpg" alt="KG Kárpit logo" loading="lazy" class="logo-img-full" />
+        <div class="logo-divider" style="background:rgba(255,255,255,.3);"></div>
+        <div class="logo-label" style="color:#fff;">Kárpit- és<br>Szőnyegtisztítás</div>
       </div>
-      <p>Profi kárpit- és szőnyegtisztítás 8+ éve. Elégedett ügyfeleink száma több mint 500. Helyszíni kiszállás egész Magyarországon.</p>
+      <p>Profi kárpit- és szőnyegtisztítás 8+ éve. Elégedett ügyfeleink száma több mint 500. Kiszállás: Cegléd / Nagykőrös / Kecskemét térsége.</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/KGkarpittisztitas" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+        <a href="https://www.instagram.com/kg_karpitesszonyegtisztitas/" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+      </div>
     </div>
     <div class="footer-col">
       <h4>Szolgáltatások</h4>
@@ -1634,27 +1913,64 @@
         <li><a href="#services">Ülőgarnitúra tisztítás</a></li>
         <li><a href="#services">Szőnyegtisztítás</a></li>
         <li><a href="#services">Matractisztítás</a></li>
-        <li><a href="#services">Autóbelső tisztítás</a></li>
+
         <li><a href="#services">Szék / Fotel tisztítás</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Elérhetőség</h4>
       <ul>
-        <li><a href="tel:+36301234567" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><path d="M14 10h10l4 12-6 4c3 6 9 12 16 16l4-6 12 4v10C54 52 10 54 14 10Z"/></svg>+36 30 123 4567</a></li>
-        <li><a href="mailto:info@kgkarpit.hu" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><rect x="8" y="16" width="48" height="32" rx="4"/><polyline points="8,16 32,36 56,16"/></svg>info@kgkarpit.hu</a></li>
-        <li><a href="#contact" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><path d="M32 6C22 6 14 14 14 24c0 14 18 34 18 34s18-20 18-34C50 14 42 6 32 6Z"/><circle cx="32" cy="24" r="7"/></svg>Budapest & Magyarország</a></li>
+        <li><a href="tel:+36307566261" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><path d="M14 10h10l4 12-6 4c3 6 9 12 16 16l4-6 12 4v10C54 52 10 54 14 10Z"/></svg>+36 30 756 6261</a></li>
+        <li><a href="mailto:kgkarpittisztitas@gmail.com" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><rect x="8" y="16" width="48" height="32" rx="4"/><polyline points="8,16 32,36 56,16"/></svg>kgkarpittisztitas@gmail.com</a></li>
+        <li><a href="#contact" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><path d="M32 6C22 6 14 14 14 24c0 14 18 34 18 34s18-20 18-34C50 14 42 6 32 6Z"/><circle cx="32" cy="24" r="7"/></svg>Cegléd / Nagykőrös / Kecskemét</a></li>
         <li><a href="#contact" style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"/><line x1="32" y1="18" x2="32" y2="32"/><line x1="32" y1="32" x2="44" y2="38"/></svg>H–P: 8:00–18:00</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
     © 2025 KG Kárpit & Szőnyegtisztítás. Minden jog fenntartva.
+    &nbsp;·&nbsp;
+    <a href="https://www.facebook.com/KGkarpittisztitas" target="_blank" rel="noopener" style="color:rgba(255,255,255,.6);font-weight:600;">Facebook</a>
+    &nbsp;·&nbsp;
+    <a href="https://www.instagram.com/kg_karpitesszonyegtisztitas/" target="_blank" rel="noopener" style="color:rgba(255,255,255,.6);font-weight:600;">Instagram</a>
   </div>
 </footer>
 
 <!-- ===== JAVASCRIPT ===== -->
 <script>
+
+  /* --- BA Slider --- */
+  (function(){
+    const slides = document.getElementById('baSlides');
+    const dotsEl = document.getElementById('baDots');
+    if(!slides) return;
+    const total = slides.children.length;
+    let cur = 0;
+    for(let i=0;i<total;i++){
+      const d = document.createElement('button');
+      d.className = 'ba-dot' + (i===0?' active':'');
+      d.onclick = ()=>baGoTo(i);
+      dotsEl.appendChild(d);
+    }
+    window.baMove = function(dir){
+      baGoTo((cur + dir + total) % total);
+    };
+    function baGoTo(idx){
+      cur = idx;
+      slides.style.transform = `translateX(-${cur*100}%)`;
+      dotsEl.querySelectorAll('.ba-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+    }
+  })();
+
+  /* --- Gallery filter --- */
+  function filterGallery(cat, btn) {
+    document.querySelectorAll('.gf-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.g-item').forEach(item => {
+      const match = cat === 'all' || item.dataset.cat === cat;
+      item.classList.toggle('hidden', !match);
+    });
+  }
 
   /* --- Tabs --- */
   function switchTab(panelId, btn) {
@@ -1741,7 +2057,7 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll(
-    '.service-card, .review-card, .price-card, .ba-card, .gallery-grid img'
+    '.service-card, .review-card, .price-card, .ba-card, .g-item'
   ).forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(28px)';
