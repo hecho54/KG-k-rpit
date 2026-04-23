@@ -927,6 +927,8 @@
       #partners img   { height: 28px !important; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>emailjs.init('2RtUyxhX9ot1mPcyp');</script>
 </head>
 <body>
 
@@ -2263,18 +2265,34 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-  /* --- Form submit (demo) --- */
+  /* --- Form submit (EmailJS) --- */
   function submitForm(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type=submit]');
+    const form = e.target;
+    const btn = form.querySelector('button[type=submit]');
     btn.textContent = 'Küldés...';
     btn.disabled = true;
-    setTimeout(() => {
-      document.getElementById('formSuccess').style.display = 'block';
-      btn.textContent = 'Elküldve ✓';
-      btn.style.background = '#43a047';
-      e.target.reset();
-    }, 1200);
+
+    const params = {
+      name:    form.querySelector('[name=name]').value,
+      phone:   form.querySelector('[name=phone]').value,
+      email:   form.querySelector('[name=email]') ? form.querySelector('[name=email]').value : '',
+      service: form.querySelector('[name=service]') ? form.querySelector('[name=service]').value : '',
+      message: form.querySelector('[name=message]') ? form.querySelector('[name=message]').value : '',
+    };
+
+    emailjs.send('service_curvoif', 'template_17o3dqi', params)
+      .then(() => {
+        document.getElementById('formSuccess').style.display = 'block';
+        btn.textContent = 'Elküldve ✓';
+        btn.style.background = '#43a047';
+        form.reset();
+      })
+      .catch(() => {
+        btn.textContent = 'Hiba – próbáld újra';
+        btn.style.background = '#e53935';
+        btn.disabled = false;
+      });
   }
 
   /* --- Smooth scroll for header compensation --- */
