@@ -204,7 +204,6 @@
       width: 10px; height: 10px; border-radius: 50%;
       background: rgba(255,255,255,.45); border: none; cursor: pointer;
       transition: background .3s, transform .3s;
-      padding: 8px; box-sizing: content-box;
     }
     .dot.active { background: #fff; transform: scale(1.3); }
 
@@ -278,11 +277,12 @@
     .ba-arrow:hover { background: var(--blue); }
     .ba-arrow.prev { left: -20px; }
     .ba-arrow.next { right: -20px; }
-    .ba-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+    .ba-dots { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 14px; }
     .ba-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: #ccc; border: none; cursor: pointer; padding: 8px;
-      box-sizing: content-box; transition: background .2s;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #ccc; border: none; cursor: pointer; padding: 0;
+      -webkit-appearance: none; appearance: none;
+      flex-shrink: 0; transition: background .2s;
     }
     .ba-dot.active { background: var(--blue); }
     @media(max-width:640px){
@@ -395,6 +395,32 @@
 
     /* ===== REVIEWS ===== */
     .stars { color: #e0b800; font-size: 1.2rem; margin-bottom: 10px; }
+    .reviews-slider { position: relative; }
+    .reviews-overflow { overflow: hidden; }
+    .reviews-track { display: flex; transition: transform .4s ease; }
+    .reviews-page {
+      min-width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .reviews-nav {
+      display: flex; justify-content: center; align-items: center;
+      gap: 10px; margin-top: 28px;
+    }
+    .rev-arrow {
+      background: var(--blue); color: #fff; border: none;
+      width: 38px; height: 38px; border-radius: 50%; font-size: 1.1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .2s; flex-shrink: 0;
+    }
+    .rev-arrow:hover { background: var(--blue-dk); }
+    .rev-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #ccc; border: none; cursor: pointer; padding: 0;
+      -webkit-appearance: none; appearance: none; transition: background .2s;
+    }
+    .rev-dot.active { background: var(--blue); }
     .reviews-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -740,7 +766,7 @@
       .calc-wrap           { grid-template-columns: 1fr; }
       .calc-summary        { position: static; }
       .ba-grid             { grid-template-columns: 1fr; }
-      .reviews-grid        { grid-template-columns: 1fr 1fr; }
+      .reviews-page        { grid-template-columns: 1fr 1fr; }
       .services-grid       { grid-template-columns: repeat(2, 1fr); }
       .price-cards         { grid-template-columns: repeat(2, 1fr); }
       .tab-btn             { font-size: .9rem; padding: 10px 16px; }
@@ -751,135 +777,154 @@
     @media (max-width: 640px) {
       /* Base */
       html { font-size: 15px; }
-      .container { padding: 0 14px; }
+      .container { padding: 0 12px; }
 
       /* Nav */
       .nav-links  { display: none; }
       .hamburger  { display: flex; }
-      nav         { padding: 10px 14px; }
-      nav .logo-img-full  { height: 42px; }
-      nav .logo-divider   { display: none; }
-      nav .logo-label     { display: none; }
+      nav         { padding: 10px 12px; }
+      nav .logo-img-full  { height: 38px; }
+      nav .logo-divider   { display: block; height: 28px; background: #d0d0d0; }
+      nav .logo-label     { display: block; font-size: .65rem; line-height: 1.3; }
 
       /* Sections */
-      .section       { padding: 44px 0; }
-      .section-title { font-size: 1.45rem; margin-bottom: 8px; }
-      .section-sub   { font-size: .9rem; margin-bottom: 28px; padding: 0 4px; }
+      .section        { padding: 36px 0; }
+      .section-title  { font-size: 1.4rem; margin-bottom: 8px; }
+      .section-sub    { font-size: .9rem; margin-bottom: 22px; padding: 0 4px; }
 
       /* Hero */
-      .hero-content   { padding: 96px 14px 56px; }
-      .hero-title     { font-size: 1.9rem; margin-bottom: 14px; }
-      .hero-desc      { font-size: .92rem; margin-bottom: 24px; max-width: 100%; }
+      .hero-content   { padding: 88px 12px 48px; }
+      .hero-title     { font-size: 1.75rem; line-height: 1.2; margin-bottom: 12px; }
+      .hero-desc      { font-size: .9rem; margin-bottom: 20px; max-width: 100%; }
       .hero-btns      { flex-direction: column; gap: 10px; }
-      .hero-btns .btn { text-align: center; width: 100%; padding: 14px 20px; }
-      .hero-stats     { gap: 16px; flex-wrap: wrap; margin-top: 36px; }
-      .hero-stat .num { font-size: 1.6rem; }
-      .hero-stat .lbl { font-size: .8rem; }
-      .hero-badge     { font-size: .78rem; padding: 5px 14px; }
+      .hero-btns .btn { text-align: center; width: 100%; padding: 14px 20px; font-size: 1rem; }
+      .hero-stats     { gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
+      .hero-stat      { flex: 1; min-width: 80px; text-align: center; }
+      .hero-stat .num { font-size: 1.5rem; }
+      .hero-stat .lbl { font-size: .75rem; }
+      .hero-badge     { font-size: .76rem; padding: 5px 12px; max-width: calc(100% - 24px); text-align: center; }
 
       /* Services */
-      .services-grid  { grid-template-columns: 1fr 1fr; gap: 12px; }
-      .service-card   { padding: 20px 14px; }
-      .service-icon   { width: 48px; height: 48px; margin-bottom: 12px; }
-      .service-card h3 { font-size: .95rem; }
-      .service-card p  { font-size: .84rem; }
+      .services-grid  { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .service-card   { padding: 18px 12px; }
+      .service-icon   { width: 44px; height: 44px; margin-bottom: 10px; }
+      .service-card h3 { font-size: .92rem; }
+      .service-card p  { font-size: .82rem; line-height: 1.5; }
 
       /* Tabs */
-      .tab-bar        { gap: 4px; margin-bottom: 24px; overflow-x: auto; white-space: nowrap; }
-      .tab-btn        { font-size: .82rem; padding: 9px 12px; gap: 5px; }
+      .tab-bar        { gap: 4px; margin-bottom: 20px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+      .tab-btn        { font-size: .8rem; padding: 9px 10px; gap: 4px; }
       .tab-btn svg    { width: 14px; height: 14px; }
 
       /* Process steps */
-      .process-step   { grid-template-columns: 40px 20px 1fr; gap: 0 10px; }
-      .step-num       { width: 40px; height: 40px; font-size: 1.1rem; }
-      .step-body      { padding: 0 0 28px; }
-      .step-body h3   { font-size: 1rem; }
-      .step-body p    { font-size: .88rem; }
+      .process-step   { grid-template-columns: 38px 18px 1fr; gap: 0 10px; }
+      .step-num       { width: 38px; height: 38px; font-size: 1rem; }
+      .step-body      { padding: 0 0 24px; }
+      .step-body h3   { font-size: .98rem; }
+      .step-body p    { font-size: .86rem; line-height: 1.6; }
+      .step-list li   { font-size: .85rem; }
 
       /* Before/After */
-      .ba-images img  { height: 150px; }
-      .ba-label       { font-size: .7rem; }
+      .ba-slider      { margin: 0 0 32px; }
+      .ba-images img  { height: 160px; }
+      .ba-label       { font-size: .68rem; padding: 2px 8px; }
+      .ba-card p      { font-size: .88rem; padding: 10px 14px; }
+      .ba-arrow       { width: 36px; height: 36px; font-size: 1rem; }
+      .ba-arrow.prev  { left: 4px; }
+      .ba-arrow.next  { right: 4px; }
 
       /* Gallery */
       .gallery-grid   { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .g-item img     { height: 140px; }
-      .g-caption      { font-size: .85rem; }
+      .g-item img     { height: 130px; }
+      .g-caption      { font-size: .82rem; padding: 6px 8px; }
       .gallery-filter { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
-      .gf-btn         { font-size: .85rem; padding: 11px 16px; flex-shrink: 0; min-height: 44px; }
+      .gf-btn         { font-size: .82rem; padding: 10px 14px; flex-shrink: 0; min-height: 42px; }
 
       /* Prices */
-      .price-cards    { grid-template-columns: 1fr 1fr; gap: 12px; }
-      .price-card     { padding: 20px 14px; }
-      .price-icon     { width: 44px; height: 44px; margin-bottom: 10px; }
-      .price-card h3  { font-size: .95rem; }
-      .price-amount   { font-size: 1.6rem; }
-      .price-list li  { font-size: .88rem; }
-      .price-from, .price-unit { font-size: .85rem; }
-
-      /* Calculator */
-      .calc-items     { font-size: .9rem; }
-      .calc-row       { flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
-      .calc-name      { font-size: .88rem; }
-      .calc-price     { font-size: .76rem; }
-      .calc-group-title { font-size: .82rem; padding: 8px 14px; }
-      .qty-btn        { width: 28px; height: 28px; font-size: 1.1rem; }
-      .calc-summary-inner { padding: 18px 14px; }
-      .calc-total-amount  { font-size: 1.9rem; }
+      .price-cards    { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .price-card     { padding: 18px 12px; }
+      .price-icon     { width: 42px; height: 42px; margin-bottom: 8px; }
+      .price-card h3  { font-size: .92rem; }
+      .price-amount   { font-size: 1.5rem; }
+      .price-list li  { font-size: .86rem; }
+      .price-from, .price-unit { font-size: .82rem; }
 
       /* Reviews */
-      .reviews-grid   { grid-template-columns: 1fr; }
-      .review-card    { padding: 20px 16px; }
-      .review-text    { font-size: .92rem; }
-      .review-loc     { font-size: .86rem; }
+      .reviews-page   { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .review-card    { padding: 16px 12px; }
+      .review-text    { font-size: .86rem; line-height: 1.55; }
+      .review-loc     { font-size: .8rem; }
+      .review-name    { font-size: .88rem; }
+      .stars          { font-size: 1rem; margin-bottom: 6px; }
+      .review-avatar  { width: 36px; height: 36px; font-size: .8rem; flex-shrink: 0; }
+      .reviews-nav    { gap: 8px; margin-top: 20px; }
+      .rev-arrow      { width: 34px; height: 34px; font-size: 1rem; }
 
       /* Team */
-      .team-img img   { height: 200px; }
-      .team-text h2   { font-size: 1.3rem; }
-      .team-text p    { font-size: .9rem; }
-      .team-features li { font-size: .88rem; }
+      .team-img img   { height: 200px; border-radius: var(--radius); }
+      .team-text h2   { font-size: 1.25rem; }
+      .team-text p    { font-size: .88rem; }
+      .team-features li { font-size: .86rem; gap: 8px; }
 
       /* Contact */
       .form-row       { grid-template-columns: 1fr; }
-      .form-card      { padding: 22px 14px; }
+      .form-card      { padding: 20px 12px; }
+      .form-group label { font-size: .86rem; }
       .form-group input,
       .form-group select,
-      .form-group textarea { font-size: .92rem; padding: 10px 13px; }
-      .contact-info h2    { font-size: 1.4rem; }
+      .form-group textarea { font-size: .92rem; padding: 10px 12px; }
+      .contact-info h2    { font-size: 1.3rem; }
+      .contact-items      { gap: 16px; }
       .contact-item .ci-text a,
-      .contact-item .ci-text span { font-size: .92rem; }
+      .contact-item .ci-text span { font-size: .9rem; }
+      .contact-item .ci-text strong { font-size: .82rem; }
+
+      /* Partners */
+      #partners img   { height: 36px !important; }
+      #partners div[style] { gap: 28px !important; }
+
+      /* Video */
+      #partners + section .section-title,
+      section[style*="background:#111"] h2 { font-size: 1.3rem !important; }
 
       /* Footer */
-      .footer-grid    { grid-template-columns: 1fr; gap: 24px; padding: 0 14px 28px; }
-      footer          { padding: 36px 0 0; }
-      .footer-bottom  { font-size: .78rem; padding: 14px; }
-      .footer-brand .logo-img-full { height: 40px; }
-      .footer-brand .logo-label   { display: block; font-size: .72rem; }
+      .footer-grid    { grid-template-columns: 1fr; gap: 20px; padding: 0 12px 24px; }
+      footer          { padding: 32px 0 0; }
+      .footer-bottom  { font-size: .76rem; padding: 12px; text-align: center; }
+      .footer-brand .logo-img-full { height: 38px; }
+      .footer-brand .logo-label   { display: block; font-size: .7rem; }
       .footer-brand .logo-divider { display: block; }
+      .footer-brand p { font-size: .85rem; }
+      .footer-col h4  { font-size: .92rem; }
+      .footer-col ul li a { font-size: .86rem; }
+      .social-btn     { padding: 8px 14px; font-size: .84rem; }
 
       /* Floating button */
-      .float-call     { bottom: 14px; right: 14px; padding: 11px 16px; font-size: .84rem; gap: 7px; }
+      .float-call     { bottom: 12px; right: 12px; padding: 11px 14px; font-size: .82rem; gap: 6px; }
 
       /* Lightbox */
-      .lightbox-close { font-size: 2rem; top: 14px; right: 16px; }
+      .lightbox-close { font-size: 2rem; top: 12px; right: 14px; }
     }
 
     /* ===== SMALL MOBILE (max 420px) ===== */
     @media (max-width: 420px) {
-      .hero-title     { font-size: 1.65rem; }
-      .hero-stats     { flex-direction: column; gap: 10px; }
+      html            { font-size: 14px; }
+      .hero-title     { font-size: 1.55rem; }
+      .hero-stats     { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+      .hero-stat      { min-width: 70px; }
       .services-grid  { grid-template-columns: 1fr; }
       .price-cards    { grid-template-columns: 1fr; }
+      .reviews-page   { grid-template-columns: 1fr; }
       .gallery-grid   { grid-template-columns: 1fr 1fr; }
       .tab-btn span   { display: none; }
       .ba-images img  { height: 130px; }
-      .ba-arrow       { width: 40px; height: 40px; font-size: 1.1rem; }
+      .ba-arrow       { width: 34px; height: 34px; }
       .ba-arrow.prev  { left: 2px; }
       .ba-arrow.next  { right: 2px; }
-      .contact-items  { gap: 14px; }
-      .ci-icon        { width: 40px; height: 40px; }
-      .section-sub    { font-size: .92rem; }
-      .contact-item .ci-text a,
-      .contact-item .ci-text span { font-size: .95rem; }
+      .contact-items  { gap: 12px; }
+      .section-title  { font-size: 1.25rem; }
+      .section-sub    { font-size: .88rem; }
+      #partners img   { height: 28px !important; }
     }
   </style>
 </head>
@@ -1059,7 +1104,7 @@
     <div class="hero-overlay"></div>
   </div>
   <div class="hero-content">
-    <span class="hero-badge">Megbízható kárpit- és szőnyegtisztítás</span>
+    <span class="hero-badge">Megbízható Kárpit- és Szőnyegtisztítás</span>
     <h1 class="hero-title">Tiszta bútor,<br>tiszta otthon –<br>garantáltan.</h1>
     <p class="hero-desc">
       Professzionális kárpit- és szőnyegtisztítás modern géppel, 24 órás száradással.
@@ -1127,12 +1172,12 @@
         <div class="service-card">
           <div class="service-icon"><svg><use href="#ico-trophy"/></svg></div>
           <h3>Céges megrendelések</h3>
-          <p>Irodák, szállodák, éttermek – nagytételes vállalati megrendelőknek is dolgozunk.</p>
+          <p>Irodák, szállodák, éttermek – vállalati ügyfeleknek is.</p>
         </div>
         <div class="service-card">
           <div class="service-icon"><svg><use href="#ico-house"/></svg></div>
           <h3>Helyszíni szolgáltatás</h3>
-          <p>Kimegyünk hozzád! A tisztítást helyszínen végezzük, Önnek semmi dolga.</p>
+          <p>Kimegyünk hozzád! A tisztítást helyszínen végezzük, neked semmi dolgod.</p>
         </div>
       </div>
     </div>
@@ -1295,7 +1340,7 @@
               <span class="ba-label before">Előtte</span>
               <span class="ba-label after">Utána</span>
             </div>
-            <p>Kanapé mélytisztítás – szembetűnő különbség egyetlen kezeléssel.</p>
+            <p>Iskolai fellépő tisztítás.</p>
           </div>
         </div>
       </div>
@@ -1675,85 +1720,241 @@
 </section>
 
 
+<!-- ===== VIDEO ===== -->
+<section class="section" style="padding:48px 0;background:#111;">
+  <div class="container" style="max-width:860px;">
+    <h2 class="section-title" style="color:#fff;margin-bottom:8px;">Így dolgozunk</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.6);margin-bottom:28px;">Nézze meg gépi tisztítási folyamatunkat élőben.</p>
+    <video
+      controls
+      playsinline
+      preload="metadata"
+      style="width:100%;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);display:block;">
+      <source src="Images/KG_V02.mp4" type="video/mp4" />
+    </video>
+  </div>
+</section>
+
 <!-- ===== REVIEWS ===== -->
 <section class="section section-alt" id="reviews">
   <div class="container">
     <h2 class="section-title">Mit mondanak ügyfeleink?</h2>
     <p class="section-sub">Több mint 500 elégedett ügyfél visszajelzése alapján.</p>
-    <div class="reviews-grid">
+    <div class="reviews-slider">
+      <div class="reviews-overflow">
+        <div class="reviews-track" id="reviewsTrack">
 
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"Hihetetlen az eredmény! Az ülőgarnitúránk teljesen újnak néz ki. Gyorsak, precízek és kedvesek voltak. Legközelebb is csak hozzájuk fordulok!"</p>
-        <div class="review-author">
-          <div class="review-avatar">KM</div>
-          <div>
-            <div class="review-name">Kovács Mária</div>
-            <div class="review-loc">Budapest, XIII. kerület</div>
+          <!-- Oldal 1 -->
+          <div class="reviews-page">
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"A megbeszélt időpontban, egy percet sem késve érkezett meg Gabi munkatársa, aki nem csak gyorsan és precízen dolgozott, de még fel is takarított maga után. A kanapé és a fotel pedig olyan, mintha most hoztuk volna őket haza újjonnan."</p>
+              <div class="review-author"><div class="review-avatar">ÁH</div><div><div class="review-name">Ágnes Horvát</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Precíz, alapos és gyors munkát végzett minden esetben amikor hívtam! Reggeli kakaó a kanapén – pár óra múlva már nyoma sem volt. Babakocsi kupola, ágymatrac – szép, tiszta, friss illatú lett. Ajánlani tudom csak mindenkinek!"</p>
+              <div class="review-author"><div class="review-avatar">TN</div><div><div class="review-name">Tímea Nagy</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Nagyon meg vagyok elégedve a kapott szolgáltatással. Precíz és alapos munkát végzett Gábor. Az időpont foglalás is zökkenőmentes volt, 3 napon belül tudott időpontot adni. Jó szívvel ajánlom."</p>
+              <div class="review-author"><div class="review-avatar">BM</div><div><div class="review-name">Bakos Marianna</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Teljesen jó fej srác azonnal papucsra váltott! Nem koszolta össze a nappalit! Jött, csinálta, takarított és tisztelettudó volt! Mutatta mit szedett ki a kanapéból! Jó illat és trüszögésmentes nap!"</p>
+              <div class="review-author"><div class="review-avatar">JO</div><div><div class="review-name">József Oláh</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Nagyon elégedett vagyok Gábor munkájával. Már második éve ő tisztítja nálunk a kanapét, és a kárpitozott székeket. Nagyon kedves, megbízható, munkájára igényes vállalkozó. Jó szívvel ajánlom."</p>
+              <div class="review-author"><div class="review-avatar">SM</div><div><div class="review-name">Szolnoki-Hürkecz Márti</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Megbízható, lelkiismeretes csapat, a kiskutyusom által összepiszkított szőnyegemet teljesen folt- és szagmentessé varázsólták, ajánlom mindenkinek Őket!"</p>
+              <div class="review-author"><div class="review-avatar">LC</div><div><div class="review-name">Laura Czakó</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
           </div>
+
+          <!-- Oldal 2 -->
+          <div class="reviews-page">
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Megbízható, pontos és igényes munka minden alkalommal. Többször vettem már igénybe a szolgáltatásukat, és mindig maximálisan elégedett voltam. Korrekt árak, szép végeredmény – csak ajánlani tudom!"</p>
+              <div class="review-author"><div class="review-avatar">PL</div><div><div class="review-name">Pesti Laura</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Szívből ajánlom. A megbeszélt időben, pontos kiérkezés. Nagyon jó illatú szerekkel dolgoznak. Rendet hagyott maga után. Teljes bizalommal fordulok hozzájuk."</p>
+              <div class="review-author"><div class="review-avatar">RF</div><div><div class="review-name">Regina Farkas</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Gábor pontos, precíz és fantasztikus munkát végzett. A kanapé szinte újjászületett. Mindenkinek csak ajánlani tudom."</p>
+              <div class="review-author"><div class="review-avatar">AH</div><div><div class="review-name">Andrea Holló</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Ülőgarnitúra tisztítása miatt járt nálam. Végeredmény tökéletes. Gábor megbízható, pontos, rendszerető szakember. Mindenkinek ajánlom!"</p>
+              <div class="review-author"><div class="review-avatar">II</div><div><div class="review-name">Ignéczi István</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Megbízható, pontos, kedves, korrekt áron dolgozik. Nagyon szép lett a végeredmény. Maximálisan meg vagyunk elégedve. Többfajta szőnyeget tisztíttattunk és mindegyik kifogástalan lett."</p>
+              <div class="review-author"><div class="review-avatar">TE</div><div><div class="review-name">Tóth Ery-ka</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Nagyon rugalmasak, kedvesek voltak, ár-érték arány nagyon jó, legközelebb is hozzájuk megyek. Gyorsak, precízek és megfizethető áron – Nagykőrös és környékén legjobbak!"</p>
+              <div class="review-author"><div class="review-avatar">JZ</div><div><div class="review-name">János Zsiros</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+          </div>
+
+          <!-- Oldal 3 -->
+          <div class="reviews-page">
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Nagyon szépen köszönöm a szép, igényes munkát. Csak ajánlani tudom a fiúkat!"</p>
+              <div class="review-author"><div class="review-avatar">VG</div><div><div class="review-name">Violetta Gálné Csík</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Gábor nagyon szépen dolgozik. Korrekt, pontos, precíz! Mindenkinek jó szívvel ajánlom!"</p>
+              <div class="review-author"><div class="review-avatar">ER</div><div><div class="review-name">Erika Ragóné</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Korrekt áron, minőségi munkát végzett Gábor! Pontos, precíz, megbízható. Mindenkinek csak ajánlani tudom."</p>
+              <div class="review-author"><div class="review-avatar">MB</div><div><div class="review-name">Mónika Árkiné Barna</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Ha szépen akarom varázsóltatni a szőnyegem, egyértelműen Gabi! Korrekt áron, pontos időben, minőségi munkát kaptam eddig is."</p>
+              <div class="review-author"><div class="review-avatar">TK</div><div><div class="review-name">Töröcsikné Kovács Bítia</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Precizitás, rugalmasság! Gyönyörűre tisztította a kanapékat! Árak kedvezőek! Csak ajánlani tudom!"</p>
+              <div class="review-author"><div class="review-avatar">CD</div><div><div class="review-name">Csengődi Dóra</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Alapos, kedves. Tökéletesen eltüntette a kanapé kellemetlen szagát!"</p>
+              <div class="review-author"><div class="review-avatar">HZ</div><div><div class="review-name">Hajdu Zsuzsanna</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+          </div>
+
+          <!-- Oldal 4 -->
+          <div class="reviews-page">
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Gyors, precíz és megbízható csapat. Mindig remek munkát végeztek."</p>
+              <div class="review-author"><div class="review-avatar">NK</div><div><div class="review-name">Norbert Kiss</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Szépen dolgoznak és rugalmasak. A régi kanapét újjávarázsólták!"</p>
+              <div class="review-author"><div class="review-avatar">ZP</div><div><div class="review-name">Zsuzsanna Pap</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"💯-os munkát végeztek! Nagyon szépen köszönjük, gyönyörű lett!"</p>
+              <div class="review-author"><div class="review-avatar">KV</div><div><div class="review-name">Kitti Varga</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Szívből ajánlom; Precíz, igényes munkát végzett Gábor."</p>
+              <div class="review-author"><div class="review-avatar">PG</div><div><div class="review-name">Parázs Gábor</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Mindenkinek csak ajánlani tudom! Köszönjük a szépen a munkát. Precíz és igényesek ráadásul még pontosak is."</p>
+              <div class="review-author"><div class="review-avatar">HU</div><div><div class="review-name">Hetti Urbán</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Gyorsan és megfizethető áron tisztulnak meg a szőnyegeink minden évben. Csak ajánlani tudom mindenkinek."</p>
+              <div class="review-author"><div class="review-avatar">VD</div><div><div class="review-name">Valkainé Varga Dóra</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+          </div>
+
+          <!-- Oldal 5 -->
+          <div class="reviews-page">
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Jó szívvel ajánlom mindenkinek, szuper szolgáltatás, pontos precíz tisztítás!"</p>
+              <div class="review-author"><div class="review-avatar">KP</div><div><div class="review-name">Katalin Petrák</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Nagyon elégedett voltam a tisztítással. Köszönöm szépen a munkákat! Jó szívvel ajánlom mindenkinek!"</p>
+              <div class="review-author"><div class="review-avatar">DP</div><div><div class="review-name">Dóra Palotainé Zsuffa</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Köszönjük a gyors precíz munkát. Új szőnyegünk lett a régiből!"</p>
+              <div class="review-author"><div class="review-avatar">TP</div><div><div class="review-name">Tamás Petrák</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Precizitás, szakértelem, megfizethető ár."</p>
+              <div class="review-author"><div class="review-avatar">KS</div><div><div class="review-name">Kiss Sándor</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Csak ajánlani tudom Mindenkinek. Pontosság, precizitás, szakértelem, és nem utolsó sorban megfizethető ár. Köszönöm a munkád."</p>
+              <div class="review-author"><div class="review-avatar">DK</div><div><div class="review-name">Diószeginé Kósa Éva Mariann</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Csak ajánlani tudom, nagyon precíz és megbízható, szép munkát végzett."</p>
+              <div class="review-author"><div class="review-avatar">ZS</div><div><div class="review-name">Zsolt Saponyi</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+          </div>
+
+          <!-- Oldal 6 -->
+          <div class="reviews-page">
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Csodás munkát végzett, újjávarázsolta a szőnyegünket! Precíz, korrekt és pontos, csak ajánlani tudom!"</p>
+              <div class="review-author"><div class="review-avatar">AT</div><div><div class="review-name">Andrea Tamás</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Precíz munkát végzett, korrekt, ajánlani tudom mindenkinek!"</p>
+              <div class="review-author"><div class="review-avatar">TA</div><div><div class="review-name">Tóth Alexandra</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Nagyon szép és igényes munkát végez."</p>
+              <div class="review-author"><div class="review-avatar">ST</div><div><div class="review-name">Szalánczi-Torma Szilvia</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Nagyon gyors, szép, megbízható munkát végzett a Gábor, mindenkinek csak ajánlani tudom!"</p>
+              <div class="review-author"><div class="review-avatar">KZ</div><div><div class="review-name">Kádár Zsolt Borsos Ályona</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Gyors, alapos munka! Csak ajánlani tudom!"</p>
+              <div class="review-author"><div class="review-avatar">VP</div><div><div class="review-name">Viktor Pál</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"Precíz, alapos, tökéletes munka! Csak ajánlani tudom!"</p>
+              <div class="review-author"><div class="review-avatar">ÁT</div><div><div class="review-name">Ági Tóth</div><div class="review-loc">Facebook értékelés</div></div></div>
+            </div>
+          </div>
+
         </div>
       </div>
-
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"A szőnyegünkön 5 éves foltos volt, amit más nem tudott eltávolítani. KG Kárpit egy kezeléssel megoldotta. Áron felüli minőség!"</p>
-        <div class="review-author">
-          <div class="review-avatar">NP</div>
-          <div>
-            <div class="review-name">Nagy Péter</div>
-            <div class="review-loc">Pest megye</div>
-          </div>
-        </div>
+      <div class="reviews-nav">
+        <button class="rev-arrow" onclick="revMove(-1)">&#8249;</button>
+        <div id="revDots"></div>
+        <button class="rev-arrow" onclick="revMove(1)">&#8250;</button>
       </div>
-
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"A matractisztítás után az allergás tüneteim jelentősen csökkentek. Profik, megbízhatók, időpontra pontosan érkeztek. Csak ajánlani tudom!"</p>
-        <div class="review-author">
-          <div class="review-avatar">SÉ</div>
-          <div>
-            <div class="review-name">Szabó Éva</div>
-            <div class="review-loc">Budaörs</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"Az autóm üléseit tisztíttatták meg náluk. Döbbenetes különbség! Ráadásul az ár is nagyon korrekt volt. Barátknak is ajánlottam."</p>
-        <div class="review-author">
-          <div class="review-avatar">HG</div>
-          <div>
-            <div class="review-name">Horváth Gábor</div>
-            <div class="review-loc">Budapest, XI. kerület</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"Irodai székjeinket tisztíttatták – 20 darabot egy nap alatt megcsinálták. Rugalmasak, precízek. Irodai partnerünk lett belőlük."</p>
-        <div class="review-author">
-          <div class="review-avatar">KA</div>
-          <div>
-            <div class="review-name">Kiss Andrea</div>
-            <div class="review-loc">Budapest, V. kerület</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"Gyerekektől teljesen összekoszolt sarokkanapéjuk volt. Tökéletesen letisztítva adták vissza. Gyors száradás, kellemes illat. 10/10!"</p>
-        <div class="review-author">
-          <div class="review-avatar">TR</div>
-          <div>
-            <div class="review-name">Takács Réka</div>
-            <div class="review-loc">Győr</div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -1939,27 +2140,57 @@
 <!-- ===== JAVASCRIPT ===== -->
 <script>
 
+  /* --- Reviews Slider --- */
+  (function(){
+    const track = document.getElementById('reviewsTrack');
+    const dotsEl = document.getElementById('revDots');
+    if(!track) return;
+    const pages = track.children.length;
+    let cur = 0, tx = 0;
+    dotsEl.style.display = 'flex';
+    dotsEl.style.gap = '6px';
+    dotsEl.style.alignItems = 'center';
+    for(let i=0;i<pages;i++){
+      const d = document.createElement('button');
+      d.className = 'rev-dot' + (i===0?' active':'');
+      d.onclick = ()=>revGoTo(i);
+      dotsEl.appendChild(d);
+    }
+    window.revMove = function(dir){ revGoTo((cur+dir+pages)%pages); };
+    function revGoTo(idx){
+      cur = idx;
+      track.style.transform = `translateX(-${cur*100}%)`;
+      dotsEl.querySelectorAll('.rev-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+    }
+    // Swipe support
+    const wrap = track.parentElement;
+    wrap.addEventListener('touchstart', e=>{ tx = e.touches[0].clientX; }, {passive:true});
+    wrap.addEventListener('touchend', e=>{ const dx = e.changedTouches[0].clientX - tx; if(Math.abs(dx)>40) revMove(dx<0?1:-1); }, {passive:true});
+  })();
+
   /* --- BA Slider --- */
   (function(){
     const slides = document.getElementById('baSlides');
     const dotsEl = document.getElementById('baDots');
     if(!slides) return;
     const total = slides.children.length;
-    let cur = 0;
+    let cur = 0, tx = 0;
     for(let i=0;i<total;i++){
       const d = document.createElement('button');
       d.className = 'ba-dot' + (i===0?' active':'');
       d.onclick = ()=>baGoTo(i);
       dotsEl.appendChild(d);
     }
-    window.baMove = function(dir){
-      baGoTo((cur + dir + total) % total);
-    };
+    window.baMove = function(dir){ baGoTo((cur + dir + total) % total); };
     function baGoTo(idx){
       cur = idx;
       slides.style.transform = `translateX(-${cur*100}%)`;
       dotsEl.querySelectorAll('.ba-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
     }
+    // Swipe support
+    const track = slides.parentElement;
+    track.addEventListener('touchstart', e=>{ tx = e.touches[0].clientX; }, {passive:true});
+    track.addEventListener('touchend', e=>{ const dx = e.changedTouches[0].clientX - tx; if(Math.abs(dx)>40) baMove(dx<0?1:-1); }, {passive:true});
   })();
 
   /* --- Gallery filter --- */
