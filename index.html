@@ -2052,7 +2052,9 @@
 
       <div class="form-card">
         <h3>Ingyenes ajánlatkérés</h3>
-        <form id="contactForm" onsubmit="submitForm(event)">
+        <form id="contactForm" enctype="multipart/form-data">
+          <input type="hidden" name="access_key" value="8184ea1c-2bd5-48e3-bc10-489daac7211f">
+          <input type="hidden" name="subject" value="Új ajánlatkérés - KG Kárpit">
           <div class="form-row">
             <div class="form-group">
               <label for="fname">Neve *</label>
@@ -2069,23 +2071,22 @@
           </div>
           <div class="form-group">
             <label for="service">Melyik szolgáltatás érdekli? *</label>
-            <select id="service" name="service" required>
+            <select id="service" name="szolgaltatas" required>
               <option value="">– Válasszon –</option>
               <option>Ülőgarnitúra tisztítás</option>
               <option>Szőnyegtisztítás</option>
               <option>Matractisztítás</option>
               <option>Szék / Fotel tisztítás</option>
-
               <option>Több szolgáltatás</option>
             </select>
           </div>
           <div class="form-group">
             <label for="message">Rövid leírás (opcionális)</label>
-            <textarea id="message" name="message" placeholder="Pl. 3 személyes kanapé, van kutya, sötét szőnyeg 3×4 m..."></textarea>
+            <textarea id="message" name="leiras" placeholder="Pl. 3 személyes kanapé, van kutya, sötét szőnyeg 3×4 m..."></textarea>
           </div>
           <div class="form-group">
             <label for="photo">Fotó csatolása (opcionális)</label>
-            <input type="file" id="photo" name="photo" accept="image/*" multiple
+            <input type="file" id="photo" name="attachment" accept="image/*"
               style="padding:8px;cursor:pointer;background:#fafafa;"/>
             <span style="font-size:.8rem;color:var(--muted);margin-top:4px;display:block;">Képet küldhet a tisztítandó felületről – gyorsítja az árajánlatot.</span>
           </div>
@@ -2266,35 +2267,32 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-  /* --- Form submit (EmailJS) --- */
-  function submitForm(e) {
+  /* --- Form submit (Web3Forms) --- */
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const form = e.target;
-    const btn = form.querySelector('button[type=submit]');
+    const btn = this.querySelector('button[type=submit]');
     btn.textContent = 'Küldés...';
     btn.disabled = true;
-
-    const params = {
-      name:    form.querySelector('[name=name]').value,
-      phone:   form.querySelector('[name=phone]').value,
-      email:   form.querySelector('[name=email]') ? form.querySelector('[name=email]').value : '',
-      service: form.querySelector('[name=service]') ? form.querySelector('[name=service]').value : '',
-      message: form.querySelector('[name=message]') ? form.querySelector('[name=message]').value : '',
-    };
-
-    emailjs.send('service_curvoif', 'template_17o3dqi', params)
-      .then(() => {
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: new FormData(this)
+      });
+      const data = await res.json();
+      if (data.success) {
         document.getElementById('formSuccess').style.display = 'block';
         btn.textContent = 'Elküldve ✓';
         btn.style.background = '#43a047';
-        form.reset();
-      })
-      .catch(() => {
-        btn.textContent = 'Hiba – próbáld újra';
-        btn.style.background = '#e53935';
-        btn.disabled = false;
-      });
-  }
+        this.reset();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      btn.textContent = 'Hiba – próbáld újra';
+      btn.style.background = '#e53935';
+      btn.disabled = false;
+    }
+  });
 
   /* --- Smooth scroll for header compensation --- */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
