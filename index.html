@@ -881,11 +881,13 @@
       .contact-item .ci-text strong { font-size: .82rem; }
 
       /* Partners */
-      #partners img   { height: 36px !important; }
-      #partners div[style*="gap:40px"]  { gap: 24px !important; }
-      #partners div[style*="gap:16px"]  { gap: 10px !important; }
-      #partners div[style*="font-size:.85rem"] { font-size: .78rem !important; padding: 0 10px !important; }
-      #partners div[style*="font-size:.78rem"] { font-size: .72rem !important; }
+      .partners-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:16px; }
+      .partner-item { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:16px 20px; background:#fff; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,.06); min-width:120px; }
+      .partner-item img { height:44px; width:auto; object-fit:contain; }
+      .partner-item span { font-size:.75rem; font-weight:600; color:var(--muted); text-align:center; line-height:1.3; }
+      .partner-text img { display:none; }
+      .partner-text { border:2px solid #e8e8e8; box-shadow:none; }
+      .partner-text span { font-size:.85rem; }
 
       /* Video */
       #partners + section .section-title,
@@ -912,6 +914,11 @@
 
     /* ===== SMALL MOBILE (max 420px) ===== */
     @media (max-width: 420px) {
+      .partners-grid { gap: 8px; }
+      .partner-item  { min-width: 80px; padding: 10px 12px; }
+      .partner-item img { height: 30px; }
+      .partner-item span { font-size: .68rem; }
+      .partner-text span { font-size: .75rem; }
       html            { font-size: 14px; }
       .hero-title     { font-size: 1.55rem; }
       .hero-stats     { flex-direction: row; flex-wrap: wrap; gap: 8px; }
@@ -2009,27 +2016,33 @@
       </a>
     </div>
     <p style="text-align:center;font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:28px;">Néhány ügyfelünk</p>
-    <!-- Logós partnerek -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;margin-bottom:20px;">
-      <img src="Images/MARKA_LOGOK_rgb-01-scaled.png" alt="Márka" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
-      <img src="Images/fornetti_kicsi.png" alt="Fornetti" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
-      <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <img src="Images/Nyarlorinc.png" alt="Nyárlőrinc Óvoda" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
-        <div style="font-size:.78rem;color:var(--muted);font-weight:600;">Nyárlőrinc Óvoda</div>
+    <div class="partners-grid">
+      <div class="partner-item">
+        <img src="Images/MARKA_LOGOK_rgb-01-scaled.png" alt="Márka" />
+        <span>Márka</span>
       </div>
-      <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <img src="Images/Nagykörös városi ovóda.jpg" alt="Nagykőrös Városi Óvoda" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
-        <div style="font-size:.78rem;color:var(--muted);font-weight:600;">Nagykőrös Városi Óvoda</div>
+      <div class="partner-item">
+        <img src="Images/fornetti_kicsi.png" alt="Fornetti" />
+        <span>Fornetti</span>
       </div>
-      <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <img src="Images/Nagykőrösi járás bíróság.svg" alt="Nagykőrösi Járásbíróság" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
-        <div style="font-size:.78rem;color:var(--muted);font-weight:600;">Nagykőrösi Járásbíróság</div>
+      <div class="partner-item">
+        <img src="Images/Nyarlorinc.png" alt="Nyárlőrinc Óvoda" />
+        <span>Nyárlőrinc Óvoda</span>
       </div>
-    </div>
-    <!-- Szöveges partnerek -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
-      <div style="height:44px;display:flex;align-items:center;justify-content:center;padding:0 16px;border:2px solid #e8e8e8;border-radius:8px;font-size:.85rem;font-weight:700;color:var(--muted);">Nagykőrös Városi Bölcsőde</div>
-      <div style="height:44px;display:flex;align-items:center;justify-content:center;padding:0 16px;border:2px solid #e8e8e8;border-radius:8px;font-size:.85rem;font-weight:700;color:var(--muted);">Nagykőrösi Humánszolgáltató Központ</div>
+      <div class="partner-item">
+        <img src="Images/Nagykörös városi ovóda.jpg" alt="Nagykőrös Városi Óvoda" />
+        <span>Nagykőrös Városi Óvoda</span>
+      </div>
+      <div class="partner-item">
+        <img src="Images/Nagykőrösi járás bíróság.svg" alt="Nagykőrösi Járásbíróság" />
+        <span>Nagykőrösi Járásbíróság</span>
+      </div>
+      <div class="partner-item partner-text">
+        <span>Nagykőrös Városi Bölcsőde</span>
+      </div>
+      <div class="partner-item partner-text">
+        <span>Nagykőrösi Humánszolgáltató Központ</span>
+      </div>
     </div>
   </div>
 </section>
