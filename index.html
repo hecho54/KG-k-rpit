@@ -6,6 +6,7 @@
   <meta name="description" content="KG Kárpit & Szőnyegtisztítás – Profi kárpit és szőnyegtisztítás, bútorhuzatos, gyors és megbízható szolgáltatás. Kérjen árajánlatot!" />
   <meta name="keywords" content="kárpittisztítás, szőnyegtisztítás, bútorhuzat, ülőgarnitúra tisztítás, kárpit Budapest" />
   <title>KG Kárpit & Szőnyegtisztítás</title>
+  <link rel="icon" type="image/jpeg" href="Images/Logó.jpg" />
   <style>
     /* ===== RESET & BASE ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -881,7 +882,10 @@
 
       /* Partners */
       #partners img   { height: 36px !important; }
-      #partners div[style] { gap: 28px !important; }
+      #partners div[style*="gap:40px"]  { gap: 24px !important; }
+      #partners div[style*="gap:16px"]  { gap: 10px !important; }
+      #partners div[style*="font-size:.85rem"] { font-size: .78rem !important; padding: 0 10px !important; }
+      #partners div[style*="font-size:.78rem"] { font-size: .72rem !important; }
 
       /* Video */
       #partners + section .section-title,
@@ -924,7 +928,10 @@
       .contact-items  { gap: 12px; }
       .section-title  { font-size: 1.25rem; }
       .section-sub    { font-size: .88rem; }
-      #partners img   { height: 28px !important; }
+      #partners img   { height: 26px !important; }
+      #partners div[style*="gap:40px"]  { gap: 16px !important; }
+      #partners div[style*="gap:16px"]  { gap: 8px !important; flex-direction: column !important; align-items: stretch !important; }
+      #partners div[style*="font-size:.85rem"] { font-size: .75rem !important; padding: 0 8px !important; height: 38px !important; text-align: center !important; }
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -2002,9 +2009,27 @@
       </a>
     </div>
     <p style="text-align:center;font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:28px;">Néhány ügyfelünk</p>
-    <div style="display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;">
+    <!-- Logós partnerek -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;margin-bottom:20px;">
       <img src="Images/MARKA_LOGOK_rgb-01-scaled.png" alt="Márka" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
       <img src="Images/fornetti_kicsi.png" alt="Fornetti" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
+      <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <img src="Images/Nyarlorinc.png" alt="Nyárlőrinc Óvoda" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
+        <div style="font-size:.78rem;color:var(--muted);font-weight:600;">Nyárlőrinc Óvoda</div>
+      </div>
+      <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <img src="Images/Nagykörös városi ovóda.jpg" alt="Nagykőrös Városi Óvoda" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
+        <div style="font-size:.78rem;color:var(--muted);font-weight:600;">Nagykőrös Városi Óvoda</div>
+      </div>
+      <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <img src="Images/Nagykőrösi járás bíróság.svg" alt="Nagykőrösi Járásbíróság" style="height:48px;width:auto;object-fit:contain;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" />
+        <div style="font-size:.78rem;color:var(--muted);font-weight:600;">Nagykőrösi Járásbíróság</div>
+      </div>
+    </div>
+    <!-- Szöveges partnerek -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
+      <div style="height:44px;display:flex;align-items:center;justify-content:center;padding:0 16px;border:2px solid #e8e8e8;border-radius:8px;font-size:.85rem;font-weight:700;color:var(--muted);">Nagykőrös Városi Bölcsőde</div>
+      <div style="height:44px;display:flex;align-items:center;justify-content:center;padding:0 16px;border:2px solid #e8e8e8;border-radius:8px;font-size:.85rem;font-weight:700;color:var(--muted);">Nagykőrösi Humánszolgáltató Központ</div>
     </div>
   </div>
 </section>
@@ -2053,8 +2078,6 @@
       <div class="form-card">
         <h3>Ingyenes ajánlatkérés</h3>
         <form id="contactForm" enctype="multipart/form-data">
-          <input type="hidden" name="access_key" value="8184ea1c-2bd5-48e3-bc10-489daac7211f">
-          <input type="hidden" name="subject" value="Új ajánlatkérés - KG Kárpit">
           <div class="form-row">
             <div class="form-group">
               <label for="fname">Neve *</label>
@@ -2085,10 +2108,15 @@
             <textarea id="message" name="leiras" placeholder="Pl. 3 személyes kanapé, van kutya, sötét szőnyeg 3×4 m..."></textarea>
           </div>
           <div class="form-group">
-            <label for="photo">Fotó csatolása (opcionális)</label>
-            <input type="file" id="photo" name="attachment" accept="image/*"
-              style="padding:8px;cursor:pointer;background:#fafafa;"/>
-            <span style="font-size:.8rem;color:var(--muted);margin-top:4px;display:block;">Képet küldhet a tisztítandó felületről – gyorsítja az árajánlatot.</span>
+            <label>Fotó csatolása (opcionális)</label>
+            <input type="file" id="photoInput" accept="image/*" multiple style="display:none;" />
+            <button type="button" onclick="document.getElementById('photoInput').click()"
+              style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:2px dashed #d0d0d0;border-radius:8px;background:#fafafa;cursor:pointer;font-size:.9rem;color:var(--muted);transition:border-color .2s;"
+              onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='#d0d0d0'">
+              Kép hozzáadása
+            </button>
+            <div id="photoPreview" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;"></div>
+            <span style="font-size:.8rem;color:var(--muted);margin-top:6px;display:block;">Gyorsabb árajánlat érdekében küldjön képet a tisztítandó felületről! (max. 10 db)</span>
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%;font-size:1.05rem;">
             Ajánlatot kérek →
@@ -2267,23 +2295,74 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-  /* --- Form submit (Web3Forms) --- */
+  /* --- Photo upload --- */
+  (function(){
+    const input = document.getElementById('photoInput');
+    const preview = document.getElementById('photoPreview');
+    if(!input) return;
+    let files = new DataTransfer();
+
+    input.addEventListener('change', function(){
+      Array.from(this.files).forEach(file => {
+        if(files.files.length >= 10) { alert('Maximum 10 képet lehet csatolni.'); return; }
+        // Duplikátum ellenőrzés
+        for(let f of files.files) { if(f.name===file.name && f.size===file.size) return; }
+        files.items.add(file);
+        const reader = new FileReader();
+        reader.onload = e => {
+          const wrap = document.createElement('div');
+          wrap.style.cssText = 'position:relative;width:72px;height:72px;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.15);';
+          wrap.dataset.name = file.name;
+          wrap.dataset.size = file.size;
+          wrap.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;">
+            <button type="button" onclick="removePhoto(this)" style="position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;font-size:12px;line-height:1;display:flex;align-items:center;justify-content:center;">×</button>`;
+          preview.appendChild(wrap);
+        };
+        reader.readAsDataURL(file);
+      });
+      input.value = '';
+    });
+
+    window.removePhoto = function(btn){
+      const wrap = btn.parentElement;
+      const name = wrap.dataset.name;
+      const size = parseInt(wrap.dataset.size);
+      const newDt = new DataTransfer();
+      for(let f of files.files){ if(!(f.name===name && f.size===size)) newDt.items.add(f); }
+      files = newDt;
+      wrap.remove();
+    };
+
+    // Form küldéskor csatoljuk a fájlokat
+    document.getElementById('contactForm').addEventListener('submit', function(){
+      // Eltávolítjuk a régi hidden inputokat
+      this.querySelectorAll('input[name="attachment[]"]').forEach(el=>el.remove());
+      // Minden fájlt külön hidden inputba (DataTransfer-ből nem lehet közvetlenül, ezért FileReader-rel)
+    }, true);
+
+    // Felülírjuk a FormData-t hogy tartalmazza a fájlokat
+    window._getPhotoFiles = ()=> files.files;
+  })();
+
+  /* --- Form submit (PHP) --- */
   document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = this.querySelector('button[type=submit]');
     btn.textContent = 'Küldés...';
     btn.disabled = true;
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: new FormData(this)
-      });
+      const fd = new FormData(this);
+      if(window._getPhotoFiles) {
+        Array.from(window._getPhotoFiles()).forEach(f => fd.append('attachment[]', f));
+      }
+      const res = await fetch('send.php', { method: 'POST', body: fd });
       const data = await res.json();
       if (data.success) {
         document.getElementById('formSuccess').style.display = 'block';
         btn.textContent = 'Elküldve ✓';
         btn.style.background = '#43a047';
         this.reset();
+        document.getElementById('photoPreview').innerHTML = '';
       } else {
         throw new Error();
       }
